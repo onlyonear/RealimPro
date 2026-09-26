@@ -83,6 +83,21 @@ extension PhysicalNote {
         )
     }
     
+    /// 按和弦时值累加，构建【精确和弦时间线】（起始 slot + 和弦块）。
+    /// 单一口径：batchToNCP 内部挂和弦、GrammarStrategy / GuideTransformBridge / MelodyTransformAdapter
+    /// 透传给 JavaAlignedTransformEngine.apply 都复用本方法，避免长音横跨换和弦、边界无音头时引擎从
+    /// 音头反推而漏掉中间和弦（实测 B7+ 被挂成 Dm7，导致加花 guard 误否、RNG 失步）。
+    static func chordTimeline(chordBlocks: [ChordBlock],
+                              slotsPerBeat: Int = 120) -> [(start: Int, chord: ChordBlock)] {
+        var timeline: [(start: Int, chord: ChordBlock)] = []
+        var accum = 0
+        for chord in chordBlocks {
+            timeline.append((start: accum, chord: chord))
+            accum += Int(Double(chord.duration) * Double(slotsPerBeat))
+        }
+        return timeline
+    }
+
     /// 批量转换导音线条，【绝对全局时间轴算法】修复和弦错位Bug
     static func batchToNCP(
         guideToneLine: [PhysicalNote],
@@ -91,32 +106,32 @@ extension PhysicalNote {
     ) -> [TransformEngine.NoteChordPair] {
         var ncpList: [TransformEngine.NoteChordPair] = []
         guard !chordBlocks.isEmpty else { return ncpList }
-        
-        // 预计算所有和弦全局起始slot（绝对时间标尺）
-        var chordStartSlots: [Int] = []
-        var totalAccSlot = 0
-        for chord in chordBlocks {
-            chordStartSlots.append(totalAccSlot)
-            let chordSlotCount = Int(Double(chord.duration) * Double(slotsPerBeat))
-            totalAccSlot += chordSlotCount
-        }
-        
+
+        // [和弦时间线修复 20260924] 旧码封存：原先在本函数内自行累加 chordStartSlots（与外部多处重复），
+        //   现统一复用共享 chordTimeline(...) 单一口径。
+        // var chordStartSlots: [Int] = []
+        // var totalAccSlot = 0
+        // for chord in chordBlocks {
+        //     chordStartSlots.append(totalAccSlot)
+        //     let chordSlotCount = Int(Double(chord.duration) * Double(slotsPerBeat))
+        //     totalAccSlot += chordSlotCount
+        // }
+        let timeline = chordTimeline(chordBlocks: chordBlocks, slotsPerBeat: slotsPerBeat)
+
         var globalSlot = 0
         for note in guideToneLine {
-            // 查找当前全局时间落在哪个和弦区间
-            var chordIndex = 0
-            for i in 0..<chordStartSlots.count {
-                if globalSlot >= chordStartSlots[i] {
-                    chordIndex = i
-                } else {
-                    break
-                }
-            }
-            
-            let targetChord = chordBlocks[chordIndex]
+            // 查找当前全局时间落在哪个和弦区间（取 start <= globalSlot 的最后一个）
+            var targetChord = timeline[0].chord
+            for e in timeline where globalSlot >= e.start { targetChord = e.chord }
+            // [旧码封存] 原 chordIndex 循环与上方 timeline 线性扫描等价：
+            // var chordIndex = 0
+            // for i in 0..<chordStartSlots.count {
+            //     if globalSlot >= chordStartSlots[i] { chordIndex = i } else { break }
+            // }
+            // let targetChord = chordBlocks[chordIndex]
             let ncp = note.toNCP(chord: targetChord, currentSlot: globalSlot)
             ncpList.append(ncp)
-            
+
             // 推进全局时间轴
             globalSlot += note.durationSlots
         }

@@ -207,6 +207,10 @@ enum RectifyMode: String, CaseIterable {
     case off          // 完全不整流
     case strongBeat   // 仅强拍整流，且只吸附到和弦音（Swift 历史行为，弱拍保持自由）
     case allBeats     // 全拍对齐 Java：每个非休止音都检查，合法集合=和弦音+色彩音，只拔真正外音
+    // [Grammar Color 圆点关 20260925] 新增：grammar spell-only 整流档，整流这一步直接复用已与 Java
+    //   出厂（chord=true/color=false/approach=true/merge=true）逐音对齐的 rectifyGuideSpellOnly(.off)。
+    //   不进 userVisibleCases（由 Color 圆点关驱动，不在调音台另列档位）。
+    case javaSpellOnly
 
     /// 调音台档位菜单显示名（英文，遵循 UI 英文约束）
     var label: String {
@@ -214,6 +218,7 @@ enum RectifyMode: String, CaseIterable {
         case .off:        return "Off"
         case .strongBeat: return "Strong Beats"
         case .allBeats:   return "All Beats (Java)"
+        case .javaSpellOnly: return "Spell Only (Java)"
         }
     }
 
@@ -223,6 +228,7 @@ enum RectifyMode: String, CaseIterable {
         case .off:        return "Off"
         case .strongBeat: return "Strong"
         case .allBeats:   return "All·Java"
+        case .javaSpellOnly: return "Spell·Java"
         }
     }
 
@@ -340,6 +346,14 @@ enum LightPostProcessor {
             rectified = rectifyAllBeats(reClamped, chordBlocks: chords,
                                         slotsPerBeat: slotsPerBeat,
                                         beatsPerMeasure: beatsPerMeasure)
+        case .javaSpellOnly:
+            // [Grammar Color 圆点关 20260925] spell-only：整流这一步复用已与 Java 出厂逐音对齐的
+            // rectifyGuideSpellOnly(.off)（spell 同源、趋近无时长门槛、NC 短路、结尾合并）。
+            // 音域 58/82 已在上方 clamp 应用（不套 guide 60/79）；其内部结尾合并与本函数末尾 mergeAdjacent 幂等。
+            rectified = rectifyGuideSpellOnly(reClamped, chordBlocks: chords,
+                                              slotsPerBeat: slotsPerBeat,
+                                              beatsPerMeasure: beatsPerMeasure,
+                                              colorMode: .off)
         }
         return mergeAdjacent(rectified)
     }
@@ -385,7 +399,9 @@ enum LightPostProcessor {
                                     usableToneProvider: RectifyUsableToneProvider? = nil) -> [PhysicalNote] {
         let measureLength = beatsPerMeasure * slotsPerBeat
         let strongBeatInterval = measureLength / (beatsPerMeasure <= 3 ? 1 : (beatsPerMeasure % 2 == 0 ? 2 : (beatsPerMeasure % 3 == 0 ? 3 : 1)))
-        
+        // 【D4】和弦块索引构建一次
+        let chordIndex = ChordSlotIndex(blocks: chordBlocks, slotsPerBeat: slotsPerBeat)
+
         var result = melody
         var accumSlot = 0
         
@@ -402,8 +418,7 @@ enum LightPostProcessor {
             }
             
             // ── 第1段：查当前和弦音，已是和弦音 → 保留（对齐 Java L232 enhMember）──
-            let currentChordTones = getChordTonesAtSlot(slot: accumSlot, chordBlocks: chordBlocks,
-                                                           slotsPerBeat: slotsPerBeat,
+            let currentChordTones = getChordTonesAtSlot(slot: accumSlot, index: chordIndex,
                                                            refPitch: note.midiPitch,
                                                            usableToneProvider: usableToneProvider)
             let isAlreadyChordTone = currentChordTones.contains {
@@ -424,8 +439,7 @@ enum LightPostProcessor {
                 if nextNote.midiPitch >= 0
                     && abs(nextNote.midiPitch - note.midiPitch) == 1 {  // Java adjacentPitch = ±1
                     let nextSlot = accumSlot + note.durationSlots
-                    let nextChordTones = getChordTonesAtSlot(slot: nextSlot, chordBlocks: chordBlocks,
-                                                               slotsPerBeat: slotsPerBeat,
+                    let nextChordTones = getChordTonesAtSlot(slot: nextSlot, index: chordIndex,
                                                                refPitch: nextNote.midiPitch,
                                                                usableToneProvider: usableToneProvider)
                     let nextIsChordTone = nextChordTones.contains {
@@ -476,6 +490,8 @@ enum LightPostProcessor {
         // 反拍/拍缝（八分反拍60、八分三连40/80、十六分30/90 等，%120≠0）仍为非正拍、维持宽松阈值。
         // 该判定只看音符【起始点】，且用整除一拍、与拍号无关，三拍/奇数拍同样成立。
         let measureLength = beatsPerMeasure * slotsPerBeat
+        // 【D4】和弦块索引构建一次
+        let chordIndex = ChordSlotIndex(blocks: chordBlocks, slotsPerBeat: slotsPerBeat)
 
         for (i, note) in melody.enumerated() {
             // 休止符不修正
@@ -491,8 +507,7 @@ enum LightPostProcessor {
             let isOnBeat = absSlotInMeasure % slotsPerBeat == 0
 
             // ── 第1段：当前音已是 和弦音/色彩音 → 保留（对齐 Java L235 enhMember(usableTones)）──
-            let usableTones = getChordTonesAtSlot(slot: accumSlot, chordBlocks: chordBlocks,
-                                                  slotsPerBeat: slotsPerBeat,
+            let usableTones = getChordTonesAtSlot(slot: accumSlot, index: chordIndex,
                                                   refPitch: note.midiPitch,
                                                   includeColor: true,
                                                   usableToneProvider: usableToneProvider)
@@ -513,8 +528,7 @@ enum LightPostProcessor {
                 let nextNote = melody[i + 1]
                 if nextNote.midiPitch >= 0 && abs(nextNote.midiPitch - note.midiPitch) == 1 {
                     let nextSlot = accumSlot + note.durationSlots
-                    let nextChordTones = getChordTonesAtSlot(slot: nextSlot, chordBlocks: chordBlocks,
-                                                             slotsPerBeat: slotsPerBeat,
+                    let nextChordTones = getChordTonesAtSlot(slot: nextSlot, index: chordIndex,
                                                              refPitch: nextNote.midiPitch,
                                                              includeColor: true,
                                                              usableToneProvider: usableToneProvider)
@@ -566,6 +580,10 @@ enum LightPostProcessor {
         // G1 可用音 provider：off→spell-only（出厂）；conservative→spell+保守色；full→spell+全 color。
         // 表未命中回退族级，并按三态给对应 palette（off 不给 palette=仅和弦）。
         let provider: RectifyUsableToneProvider = { chordName, minPitch, maxPitch, _ in
+            // [NOCHORD 短路 20260925] NC 返回空且【不回退族级】（主循环已对 NC 原样保留；此处双保险，
+            // 避免把「NC 空=应保留」误当成「真·表未命中=应回退族级 Cmaj7」）。
+            let pName = chordName.trimmingCharacters(in: .whitespacesAndNewlines)
+            if pName == "NC" { return [] }
             if let r = GTVocResolver.resolve(name: chordName, colorMode: colorMode), !r.candidatePCs.isEmpty {
                 var out: [Int] = []
                 for pc in r.candidatePCs {
@@ -584,13 +602,22 @@ enum LightPostProcessor {
 
         var result = melody
         var accumSlot = 0
+        // 【D4】和弦块索引构建一次
+        let chordIndex = ChordSlotIndex(blocks: chordBlocks, slotsPerBeat: slotsPerBeat)
         for (i, note) in melody.enumerated() {
             // 休止符不修正
             guard note.midiPitch >= 0 else { accumSlot += note.durationSlots; continue }
 
+            // [NOCHORD 短路 20260925] 对齐 RectifyPitchesCommand.java:178-181：构建音集前若该 slot
+            // 和弦为 NC，原样保留、不吸附（不进入下方三段）。
+            if let bi = chordIndex.blockIndex(forSlot: accumSlot),
+               chordIndex.blocks[bi].name.trimmingCharacters(in: .whitespacesAndNewlines) == "NC" {
+                accumSlot += note.durationSlots
+                continue
+            }
+
             // 第1段：已是可用音（spell-only 或 spell+color）→ 保留
-            let usableTones = getChordTonesAtSlot(slot: accumSlot, chordBlocks: chordBlocks,
-                                                  slotsPerBeat: slotsPerBeat,
+            let usableTones = getChordTonesAtSlot(slot: accumSlot, index: chordIndex,
                                                   refPitch: note.midiPitch,
                                                   includeColor: allowColorBool,
                                                   usableToneProvider: provider)
@@ -605,8 +632,7 @@ enum LightPostProcessor {
                 let nextNote = melody[i + 1]
                 if nextNote.midiPitch >= 0 && abs(nextNote.midiPitch - note.midiPitch) == 1 {
                     let nextSlot = accumSlot + note.durationSlots
-                    let nextUsable = getChordTonesAtSlot(slot: nextSlot, chordBlocks: chordBlocks,
-                                                         slotsPerBeat: slotsPerBeat,
+                    let nextUsable = getChordTonesAtSlot(slot: nextSlot, index: chordIndex,
                                                          refPitch: nextNote.midiPitch,
                                                          includeColor: allowColorBool,
                                                          usableToneProvider: provider)
@@ -698,34 +724,61 @@ enum LightPostProcessor {
         return pcMap[root] ?? 0
     }
     
+    /// 【D4】和弦块 slot 前缀索引：一次构建，之后按 slot 二分定位，
+    /// 替代每次查询对 chordBlocks 的全扫（结果与逐块累加全扫逐字一致）。
+    struct ChordSlotIndex {
+        let blocks: [ChordBlock]
+        let starts: [Int]
+        let slotsPerBeat: Int
+
+        init(blocks: [ChordBlock], slotsPerBeat: Int) {
+            self.blocks = blocks
+            self.slotsPerBeat = slotsPerBeat
+            var s = 0
+            var arr: [Int] = []
+            for cb in blocks {
+                arr.append(s)
+                s += Int(Double(cb.duration) * Double(slotsPerBeat))
+            }
+            self.starts = arr
+        }
+
+        /// 命中包含 slot 的块索引（start ≤ slot < start+块时值）；越界返回 nil
+        func blockIndex(forSlot slot: Int) -> Int? {
+            guard !starts.isEmpty else { return nil }
+            var lo = 0
+            var hi = starts.count - 1
+            while lo < hi {
+                let mid = (lo + hi + 1) / 2
+                if starts[mid] <= slot { lo = mid } else { hi = mid - 1 }
+            }
+            let cbSlots = Int(Double(blocks[lo].duration) * Double(slotsPerBeat))
+            guard slot < starts[lo] + cbSlots else { return nil }
+            return lo
+        }
+    }
+
     /// 获取指定 slot 位置的和弦音（用于 rectify 的当前和弦/下一和弦查询）
     /// 对齐 Java RectifyPitchesCommand L204-207 的 usableTones / nextUsableTones 构建
     /// - Parameters:
     ///   - slot: 绝对 slot 位置（从拍0开始）
-    ///   - chordBlocks: 和弦块数组（cb.duration 为拍数）
-    ///   - slotsPerBeat: 每拍 slot 数（默认 120）
+    ///   - index: 【D4】和弦块前缀索引（rectify 函数顶部构建一次）
     ///   - refPitch: 参考音高，用于限定查询范围（refPitch±12）
     /// - Returns: 该 slot 位置和弦的和弦音数组（实际 MIDI 音高）
-    private static func getChordTonesAtSlot(slot: Int, chordBlocks: [ChordBlock],
-                                              slotsPerBeat: Int, refPitch: Int,
+    private static func getChordTonesAtSlot(slot: Int, index: ChordSlotIndex,
+                                              refPitch: Int,
                                               includeColor: Bool = false,
                                               usableToneProvider: RectifyUsableToneProvider? = nil) -> [Int] {
-        var cAccum = 0
-        for cb in chordBlocks {
-            let cbSlots = Int(Double(cb.duration) * Double(slotsPerBeat))
-            if slot >= cAccum && slot < cAccum + cbSlots {
-                // 【T1】注入优先：guide&Transform 传 G1 词表 provider；nil（grammar 默认）走原族级，逐音不变
-                if let provider = usableToneProvider {
-                    return provider(cb.name, refPitch - 12, refPitch + 12, includeColor)
-                }
-                return getChordTonesForRectify(chordName: cb.name,
-                                                minPitch: refPitch - 12,
-                                                maxPitch: refPitch + 12,
-                                                includeColor: includeColor)
-            }
-            cAccum += cbSlots
+        guard let bi = index.blockIndex(forSlot: slot) else { return [] }
+        let cb = index.blocks[bi]
+        // 【T1】注入优先：guide&Transform 传 G1 词表 provider；nil（grammar 默认）走原族级，逐音不变
+        if let provider = usableToneProvider {
+            return provider(cb.name, refPitch - 12, refPitch + 12, includeColor)
         }
-        return []
+        return getChordTonesForRectify(chordName: cb.name,
+                                        minPitch: refPitch - 12,
+                                        maxPitch: refPitch + 12,
+                                        includeColor: includeColor)
     }
     
     // MARK: - 对齐 Java Note.getClosestMatch (Note.java:399-454)

@@ -47,6 +47,22 @@ struct GeneratedMeasure: Identifiable {
     var chordSlots: [(chord: String, startSlot: Int)] = []
 }
 
+// MARK: - 弱起偏移（显示小节 → 内容栏）
+// [2026-09-23 弱起对齐补丁·新增] 纯新增便利方法，规则与 SongMeasureMap.leadingPickupCount 一致，
+// 供视图从已生成的 [GeneratedMeasure] 现算（Phase 3 切分发生在 GeneratedMeasure 构建之前，故那里用 SongMeasureMap）。
+extension GeneratedMeasure {
+    static func leadingPickupCount(_ measures: [GeneratedMeasure]) -> Int {
+        var n = 0
+        for m in measures {
+            let c = m.chord.trimmingCharacters(in: .whitespacesAndNewlines)
+            // 主和弦为空且小节内无任何有效和弦槽 → 整小节为空字符串弱起；
+            // "NC" 小节（Guide 保留、占 roadmap 时长）chord 非空，不会被计入。
+            if c.isEmpty && m.chordSlots.isEmpty { n += 1 } else { break }
+        }
+        return n
+    }
+}
+
 // MARK: - 爵士乐理生成引擎
 class JazzEngine {
     

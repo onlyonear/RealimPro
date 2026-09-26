@@ -10,7 +10,9 @@ struct DocumentPickerView: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
-        let types: [UTType] = [.plainText, .html]
+        // .musicxml 没有系统内置 UTType，按扩展名声明；.xml 同时纳入（导入时再嗅探 <score-partwise>）
+        let musicXMLType = UTType(filenameExtension: "musicxml") ?? UTType.xml
+        let types: [UTType] = [.plainText, .html, .json, .xml, musicXMLType]
 
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: types, asCopy: true)
         picker.allowsMultipleSelection = false

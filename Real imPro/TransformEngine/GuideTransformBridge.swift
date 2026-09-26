@@ -56,7 +56,12 @@ enum GuideTransformBridge {
 
         // 3) 同一套 Java 对齐内核（与 grammar&Transform 共用），乐手表缺失回退 My
         let table = TransformMusicianRegistry.tableWithFallback(musician) ?? []
-        let transformed = TransformEngine.JavaAlignedTransformEngine.apply(to: ncps, table: table, mode: mode)
+        // ── [和弦时间线修复 20260924] 旧码封存：第 1 步已按和弦时值累加构建好精确 timeline（元组标签
+        //    start/chord 与 apply 参数对齐），原先调引擎未透传、引擎又从音头反推边界（长音跨和弦漏中间
+        //    和弦）。改为透传 timeline。
+        // let transformed = TransformEngine.JavaAlignedTransformEngine.apply(to: ncps, table: table, mode: mode)
+        let transformed = TransformEngine.JavaAlignedTransformEngine.apply(to: ncps, table: table, mode: mode,
+                                                                          chordTimeline: timeline)
 
         // 4) NoteChordPair -> PhysicalNote
         let phys = transformed.map {

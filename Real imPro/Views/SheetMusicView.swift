@@ -19,6 +19,8 @@ struct SheetMusicView: UIViewRepresentable {
     var grammarFileName: String = "chord"  // 当前文法文件名(chord/color/CharlieParker等)
     var showAnalysis: Bool = false         // 级数分析开关（色块+级数文字）
     var analysis: AnalysisResult? = nil    // 调性分析数据（独立模块，不侵入 GeneratedMeasure）
+    // [2026-09-23 弱起对齐补丁·新增] 弱起（前置空小节）数：分析项相对显示小节后移该数
+    var pickupMeasureCount: Int = 0
     var onNoteClick: ((String) -> Void)? = nil
     
     // 🌟 终极安全版 Coordinator
@@ -247,11 +249,19 @@ struct SheetMusicView: UIViewRepresentable {
     // MARK: - 级数分析数据注入（独立模块）
     /// 为指定小节生成 analysis 字段的 JS 字符串
     private func generateAnalysisJS(for measureIndex: Int) -> String {
+        // [旧码封存 2026-09-23] 原 guard 直接按 measureIndex 取，弱起时 m0 错贴 analysis[0]、末小节越界：
+        // guard showAnalysis, let analysis = analysis,
+        //       measureIndex < analysis.measures.count else {
+        //     return "analysis: null"
+        // }
+        // [2026-09-23 弱起对齐补丁] 分析项相对显示小节后移 pickupMeasureCount（弱起不占分析项）
+        let contentIndex = measureIndex - pickupMeasureCount
         guard showAnalysis, let analysis = analysis,
-              measureIndex < analysis.measures.count else {
+              contentIndex >= 0,
+              contentIndex < analysis.measures.count else {
             return "analysis: null"
         }
-        let measure = analysis.measures[measureIndex]
+        let measure = analysis.measures[contentIndex]
         let chordJS = measure.chordAnalyses.map { ca in
             "{label:'\(ca.functionLabel)',color:'\(ca.colorHex)',beatStart:\(ca.beatStart),beatDuration:\(ca.beatDuration)}"
         }.joined(separator: ",")

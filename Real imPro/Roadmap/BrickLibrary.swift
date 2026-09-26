@@ -766,11 +766,87 @@ struct BrickLibrary {
     static var analysisBricks: [BrickTemplate] { hardcodedBricks }
 }
 
+// MARK: - 【D3】砖转调/产生式全局静态缓存（只提速、结果逐字不变）
+/// transpose(to:) 与 generateProductions 都是砖模板的纯函数变换：同一砖源、同一目标 key
+/// 输出必然相同。此处全局只算一次，消除每个 key 循环内的重复计算。
+enum BrickPerfCache {
+    /// 砖源标识：生成链 standard / 分析链 analysis
+    enum Source { case standard, analysis }
+
+    private static let perfLock = NSLock()
+    private static var transposeCache: [String: [BrickLibrary.BrickTemplate]] = [:]
+    private static var productionsCache: [String: [BinaryProduction]] = [:]
+
+    private static func cacheKey(_ src: Source, _ key: Int) -> String {
+        (src == .standard ? "s" : "a") + "t\(key)"
+    }
+
+    /// 砖源整体转调到目标 key（全局缓存一次）
+    static func transposed(_ src: Source, key: Int) -> [BrickLibrary.BrickTemplate] {
+        let k = cacheKey(src, key)
+        perfLock.lock()
+        if let v = transposeCache[k] { perfLock.unlock(); return v }
+        perfLock.unlock()
+        let base = (src == .standard) ? BrickLibrary.standardBricks : BrickLibrary.analysisBricks
+        let v = base.map { $0.transpose(to: key) }
+        perfLock.lock(); transposeCache[k] = v; perfLock.unlock()
+        return v
+    }
+
+    /// 转调后砖源的产生式集（全局缓存一次）
+    static func productions(_ src: Source, key: Int) -> [BinaryProduction] {
+        let k = cacheKey(src, key) + "p"
+        perfLock.lock()
+        if let v = productionsCache[k] { perfLock.unlock(); return v }
+        perfLock.unlock()
+        let tb = transposed(src, key: key)
+        let v = generateProductions(from: tb, pocOnly: false)
+        perfLock.lock(); productionsCache[k] = v; perfLock.unlock()
+        return v
+    }
+}
+
 // MARK: - JazzRoadmap 扩展: Brick解析集成
 
 extension JazzRoadmap {
+    /// 【D2】确定性产物缓存签名：逐字列出和弦（名/时值/段首标记），不做哈希，杜绝碰撞。
+    /// includeKeyMap=true 时附加 keyMap（parseBricks 的 labels 依赖它）。
+    func perfBrickSignature(includeKeyMap: Bool) -> String {
+        let flat = flattenRoadmap()
+        var s = "n\(flat.count)"
+        for cb in flat {
+            s += "|\(cb.name):\(cb.duration):\(cb.isSectionStart ? 1 : 0)"
+        }
+        if includeKeyMap {
+            s += "||km" + keyMap.map {
+                "\($0.rootPC):\($0.mode):\($0.startBeat):\($0.endBeat)"
+            }.joined(separator: ",")
+        }
+        return s
+    }
+
+    /// 【D2】parseBricks / parseBricksV2 结果记忆（构造上同输入必同输出）
+    final class RoadmapBrickMemo {
+        var parseBricksKey: String?
+        var parseBricksValue: (tree: TreeNode?,
+                               bricks: [(name: String, start: Double, end: Double, key: String, referenceKey: Int)])?
+        var v2Cache: [String: (tree: TreeNode?, blocks: [PostProcessorFull.AnalysisBlock])] = [:]
+    }
+    /// 缓存挂在 roadmap 实例上（用静态表按对象身份索引，避免给类加存储属性）
+    private struct MemoHolder { static var map: [ObjectIdentifier: RoadmapBrickMemo] = [:] }
+    var brickMemo: RoadmapBrickMemo {
+        let id = ObjectIdentifier(self)
+        if let m = MemoHolder.map[id] { return m }
+        let m = RoadmapBrickMemo()
+        MemoHolder.map[id] = m
+        return m
+    }
+
     /// 对当前和弦序列执行CYK解析+Brick匹配 (阶段4: 转调枚举匹配)
     func parseBricks() -> (tree: TreeNode?, bricks: [(name: String, start: Double, end: Double, key: String, referenceKey: Int)]) {
+        // 【D2】同输入（和弦序列 + keyMap）直接返回已算结果
+        let signature = perfBrickSignature(includeKeyMap: true)
+        if let v = brickMemo.parseBricksValue, brickMemo.parseBricksKey == signature { return v }
         let chords = flattenRoadmap()
         let labels = computeRelativeFunctionLabels(chords: chords)
         let chordNames = chords.map { $0.name }
@@ -797,9 +873,9 @@ extension JazzRoadmap {
 
         for key in allKeys {
             let keyStart = Date()
-            // 把 standardBricks 转调到当前 key (阶段1 已实现 transpose(to:))
-            let transposedBricks = BrickLibrary.standardBricks.map { $0.transpose(to: key) }
-            let dynProds = generateProductions(from: transposedBricks, pocOnly: false)
+            // 【D3】转调砖与产生式全局缓存（同 key 只算一次）
+            let transposedBricks = BrickPerfCache.transposed(.standard, key: key)
+            let dynProds = BrickPerfCache.productions(.standard, key: key)
 
             // 🔍 DEBUG: 打印 V-I 相关产生式
             #if DEBUG
@@ -811,7 +887,9 @@ extension JazzRoadmap {
             dprint("🔍 [DEBUG-PRODS] key=\(key) 真正砖产生式: \(realBricks.count)个")
             #endif
 
-            let parser = CYKParser(binaryProductions: dynProds)
+            // 【D1】按砖模板最大和弦数限定 CYK 跨度（更长格子不可能承载真实砖）
+            let keyMaxSpan = transposedBricks.map { $0.chords.count }.max() ?? Int.max
+            let parser = CYKParser(binaryProductions: dynProds, maxSpan: keyMaxSpan)
             // 性能优化: 一次 CYK 返回 dp, extractAllBricks 复用 dp, 不再重跑
             let (tree, dp, n) = parser.parseWithLabelsReturnDP(labels: labels, chordNames: chordNames)
             let rawBricks = parser.extractAllBricks(from: dp, n: n)
@@ -870,7 +948,11 @@ extension JazzRoadmap {
 
         // 直接改现有 alignBricksWithKeys (已加 referenceKey 透传)
         let alignedBricks = PostProcessor.alignBricksWithKeys(bricks: uniqueBricks, keySpans: keyMap)
-        return (bestTree, alignedBricks)
+        // 【D2】记忆结果（同签名下次直接返回）
+        let result = (tree: bestTree, bricks: alignedBricks)
+        brickMemo.parseBricksKey = signature
+        brickMemo.parseBricksValue = result
+        return result
     }
 
     // ═══════════════════════════════════════════════════════════
@@ -1040,6 +1122,9 @@ extension JazzRoadmap {
     /// 返回 (TreeNode?, [PostProcessorFull.AnalysisBlock])
     /// 对齐原版单向流程: RoadMap → CYK 识别 Brick → findKeys
     func parseBricksV2(tonicPC: Int = 0) -> (TreeNode?, [PostProcessorFull.AnalysisBlock]) {
+        // 【D2】同输入（和弦序列 + tonicPC）直接返回已算结果
+        let signature = perfBrickSignature(includeKeyMap: false) + "|tp\(tonicPC)"
+        if let v = brickMemo.v2Cache[signature] { return v }
         let chords = flattenRoadmap()
         let chordNames = chords.map { $0.name }
 
@@ -1054,14 +1139,14 @@ extension JazzRoadmap {
             // P0-d: 每个 trial key 独立计算 labels (用 computeLabel, 不依赖 keyMap, 打破循环依赖)
             // 之前用 computeRelativeFunctionLabels(chords:) 依赖旧 keyMap, 导致 Bbmaj7 被标成 bVII 而非 I
             let labelsForKey = chords.map { computeLabel(chord: $0, tonicPC: key, mode: .major) }
-            // 分析链锁定 109 精选砖(analysisBricks)；生成链 parseBricks(L795)仍用 standardBricks
-            let transposedBricks = BrickLibrary.analysisBricks.map { $0.transpose(to: key) }
+            // 【D3】分析链转调砖与产生式全局缓存（同 key 只算一次）
+            let transposedBricks = BrickPerfCache.transposed(.analysis, key: key)
             // 【P0修复-性质敏感匹配】砖名 → 转调后和弦序列 (同名取首个), 供候选砖做族兼容性校验
             var brickChordsByName: [String: [String]] = [:]
             for tb in transposedBricks where brickChordsByName[tb.name] == nil {
                 brickChordsByName[tb.name] = tb.chords
             }
-            let dynProds = generateProductions(from: transposedBricks, pocOnly: false)
+            let dynProds = BrickPerfCache.productions(.analysis, key: key)
 
             // 🔍 DEBUG: 调查 iiø-V-i 为何不匹配 — 只打印 key=7
             #if DEBUG
@@ -1077,7 +1162,9 @@ extension JazzRoadmap {
 
             // P0-e 已回退: 重新启用 defaultSubstitutions (Cm7→"ii" 区分 ii vs V, 防止 V_I 错误匹配 Cm7→F7)
             // P0-d 的 per-key labels 仅作为 substitution 未命中时的 fallback
-            let parser = CYKParser(binaryProductions: dynProds)
+            // 【D1】按砖模板最大和弦数限定 CYK 跨度（分析链实测最大 12）
+            let keyMaxSpan = transposedBricks.map { $0.chords.count }.max() ?? Int.max
+            let parser = CYKParser(binaryProductions: dynProds, maxSpan: keyMaxSpan)
             let (tree, dp, n) = parser.parseWithLabelsReturnDP(labels: labelsForKey, chordNames: chordNames)
 
             // 🔍 DEBUG: key=7 时打印 Sad-Cadence 匹配详情 (方案A 多值 dp)
@@ -1168,7 +1255,10 @@ extension JazzRoadmap {
         let analysisChords = PostProcessorFull.buildAnalysisChords(from: chords)
         let blocks = mergeBricksIntoBlocks(chords: analysisChords, bricks: derivedBricks)
 
-        return (bestTree, blocks)
+        // 【D2】记忆结果（同签名 + tonicPC 下次直接返回）
+        let result = (tree: bestTree, blocks: blocks)
+        brickMemo.v2Cache[signature] = result
+        return result
     }
 
     /// P0-2: CYK解析后将brickType标注到每个ChordBlock上 (阶段4: 转调枚举匹配)

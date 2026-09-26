@@ -49,8 +49,25 @@ struct BandMixerView: View {
     // [方案21 20260915] isColorDotEligible=当前组是否允许 Color 圆点（恢复为仅 Guide；Basic/Master 置灰）；
     //   COLOR 下拉本身始终可点、作用不变。原 melody 用的 embellishLocked 已随 Melody 组下线删除。
     @Binding var guideColorEnabled: Bool
+    // [Grammar Color 圆点 20260925] Basic/Master 整流色彩开关（默认 true，保持 grammar 默认听感）。
+    @Binding var grammarColorEnabled: Bool
     let isColorDotEligible: Bool
     let isPlaying: Bool
+
+    // [Grammar Color 圆点 20260925] 圆点语义统一为「是否启用色彩」，按当前组绑定对应持久化键：
+    private var isGuideGroup: Bool { isColorDotEligible }   // true=Guide；false=Basic/Master
+    /// 圆点 ON/OFF 绑定：Guide→guideColorEnabled（默认 false）；Basic/Master→grammarColorEnabled（默认 true）。
+    private var colorOnBinding: Binding<Bool> {
+        isGuideGroup ? $guideColorEnabled : $grammarColorEnabled
+    }
+    /// 圆点是否可点：Guide 仍要求 TRANSFORM 点亮；Basic/Master 不依赖 TRANSFORM（raw grammar 也过整流）。
+    private var dotInteractive: Bool {
+        isGuideGroup ? enableTransform : true
+    }
+    /// 当前是否启用色彩（决定圆点图标与 COLOR 下拉是否置灰）。
+    private var colorIsOn: Bool {
+        isGuideGroup ? guideColorEnabled : grammarColorEnabled
+    }
     // D4：色彩音池档位（与 ContentView 生成处共用同一持久化键）
     // 注：整流(Rectify)已固定为全拍对齐，不再在调音台显示；逻辑仍保留在 GrammarLickGlue/LightPostProcessor
     @AppStorage("colorModeRaw") private var colorModeRaw: String = ColorPaletteMode.conservative.rawValue
@@ -139,26 +156,27 @@ struct BandMixerView: View {
                         // 日后调试：改 ContentView 里 grammarStrategy.rectifyMode 的赋值即可。
 
                         // 色彩音池档位：Conservative=基础色彩 / Extended=扩展(全量延伸变化音)，用于 A/B 听感对比
-                        // [Guide Color 圆点 20260914] COLOR 标签前内嵌圆点：仅 Guide 且 TRANSFORM 点亮时可点，
-                        // 其余置灰(.disabled+opacity0.4)。圆点不新增可见文案（COLOR 沿用现有英文字面量），下拉始终可点。
+                        // [Grammar Color 圆点 20260925] COLOR 标签前圆点泛化为 Guide + Basic/Master：
+                        //   关=spell-only（=Java 出厂）；开=按下拉 Conservative/Extended 选宽度。
+                        //   Guide 仍要求 TRANSFORM 点亮才可点；Basic/Master 不要求 TRANSFORM。圆点关时下方 COLOR 下拉置灰。
                         HStack(spacing: 4) {
                             Button {
                                 let generator = UIImpactFeedbackGenerator(style: .light)
                                 generator.impactOccurred()
                                 withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                                    guideColorEnabled.toggle()
+                                    colorOnBinding.wrappedValue.toggle()
                                 }
                             } label: {
-                                Image(systemName: guideColorEnabled ? "largecircle.fill.circle" : "circle")
+                                Image(systemName: colorIsOn ? "largecircle.fill.circle" : "circle")
                                     .font(.system(size: 13, weight: .semibold))
-                                    .foregroundColor(guideColorEnabled ? .accentColor : .secondary)
+                                    .foregroundColor(colorIsOn ? .accentColor : .secondary)
                                     .frame(width: 18, height: 18)
                                     .contentShape(Rectangle())
                             }
                             .buttonStyle(.plain)
-                            // [方案21] 可用=Guide 且 TRANSFORM 点亮（恢复 guide-only）
-                            .disabled(!(isColorDotEligible && enableTransform))
-                            .opacity((isColorDotEligible && enableTransform) ? 1 : 0.4)
+                            // 资格：Guide 需 TRANSFORM 点亮；Basic/Master 恒可点
+                            .disabled(!dotInteractive)
+                            .opacity(dotInteractive ? 1 : 0.4)
                             Text("COLOR")
                                 .font(.system(size: 9, weight: .bold, design: .rounded))
                                 .foregroundColor(.secondary)
@@ -193,6 +211,9 @@ struct BandMixerView: View {
                             .clipShape(Capsule())
                             .contentShape(Capsule())
                         }
+                        // [Grammar Color 圆点 20260925] 圆点关（spell-only）时 COLOR 宽度下拉置灰不可点。
+                        .disabled(!colorIsOn)
+                        .opacity(colorIsOn ? 1 : 0.4)
 
                         // [Hunk10] Transform 加花：圆点总开关（circle / largecircle.fill.circle）。
                         // [布局调整 2026-09-14] 乐手 Menu 改为常驻：圆点关时置灰(.disabled+opacity0.4)不可选，点亮后才可点。默认关（ContentView @AppStorage=false）。

@@ -162,7 +162,13 @@ class GrammarStrategy: JazzImproStrategy {
             //    family 整流与 48–84 硬钳，整流只保留下方 LightPost.rectifyAllBeats 一次，对齐 Java 只整流一次）。
             //    乐手沿用全局所选（ContentView 生成前写入 javaAlignedMusician）；mode 缺省=生产真洗牌 SystemRNG。
             let tbl = TransformMusicianRegistry.tableWithFallback(TransformEngine.javaAlignedMusician) ?? []
-            let xformed = TransformEngine.JavaAlignedTransformEngine.apply(to: preNCP, table: tbl)
+            // ── [和弦时间线修复 20260924] 旧码封存：原先未传 chordTimeline，引擎从 NCP 音头反推和弦边界，
+            //    长音横跨换和弦、边界无音头时漏掉中间和弦（实测 B7+ 被挂成 Dm7），加花 guard 误否、RNG 失步。
+            //    直接复用共享 PhysicalNote.chordTimeline（batchToNCP 内部也是同一口径），不重复写累加循环。
+            // let xformed = TransformEngine.JavaAlignedTransformEngine.apply(to: preNCP, table: tbl)
+            let chordTimeline = PhysicalNote.chordTimeline(chordBlocks: chordBlocks)
+            let xformed = TransformEngine.JavaAlignedTransformEngine.apply(to: preNCP, table: tbl,
+                                                                          chordTimeline: chordTimeline)
             // 4) NCP→PhysicalNote 保留引擎具体音高/时值/三连；不回抽象 terminal、不二次 convert
             concreteOverride = xformed.map {
                 PhysicalNote(midiPitch: $0.note.midiPitch, durationSlots: $0.note.durationSlots,

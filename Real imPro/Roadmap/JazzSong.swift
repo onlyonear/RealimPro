@@ -52,6 +52,27 @@ struct JazzSong: Identifiable, Hashable, Codable {
     }
 }
 
+// MARK: - 小节映射（弱起/前置空小节 → 内容栏偏移）
+// [2026-09-23 弱起对齐补丁·新增] 本枚举为纯新增，不改动任何既有类型/逻辑。
+enum SongMeasureMap {
+    /// 显示小节开头，连续「整小节没有任何非空和弦」的小节数（弱起小节数量）。
+    /// 这些小节在构建 roadmap 时被跳过（ContentView.swift Guide 路径 guard !cleanChord.isEmpty，
+    /// 非 Guide 路径过滤空/NC），故引擎生成栏与级数分析项相对「显示小节」整体后移该数量。
+    /// 引擎内整流按 roadmap 工作、不受影响；只有「生成后的显示切分」与「级数渲染」需按此偏移取值。
+    /// 注意：只统计真正的空字符串小节；"NC"/"N.C." 在 Guide 路径会被保留并占用 roadmap 时长，不在此列。
+    static func leadingPickupCount(_ measures: [[String]]) -> Int {
+        var n = 0
+        for mc in measures {
+            let hasChord = mc.contains {
+                !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            }
+            if hasChord { break }
+            n += 1
+        }
+        return n
+    }
+}
+
 // MARK: - 播放列表模型
 struct JazzPlaylist: Identifiable, Codable {
     let id = UUID()

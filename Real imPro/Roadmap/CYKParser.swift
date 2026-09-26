@@ -282,11 +282,18 @@ struct CYKParser {
     private let binaryProductions: [BinaryProduction]
     /// 性能优化: 按 prod.left 建索引, 每个 cell 只遍历 left 匹配的产生式子集
     private let leftIndex: [String: [BinaryProduction]]
+    /// 【D1 跨度剪枝】CYK 合并的最大跨度（和弦数）。由调用方按砖模板最大和弦数传入；
+    /// 跨度 > maxSpan 的格子不可能承载真实砖（任何产生式结果砖和弦数 ≤ maxSpan），
+    /// 故剪枝后所有真实砖节点与剪枝前逐格相同。默认 Int.max = 不剪枝（保留旧行为）。
+    private let maxSpan: Int
 
     init(substitutions: [SubstitutionDefinition] = Self.defaultSubstitutions,
-         binaryProductions: [BinaryProduction]? = nil) {
+         binaryProductions: [BinaryProduction]? = nil,
+         maxSpan: Int? = nil) {
         self.substitutions = substitutions
         self.binaryProductions = binaryProductions ?? Self.defaultProductions
+        // 【D1】未显式传入时不剪枝，行为与旧版完全一致
+        self.maxSpan = maxSpan ?? Int.max
         // 构建 left 索引: key = prod.left, value = 该 left 对应的所有产生式
         var idx: [String: [BinaryProduction]] = [:]
         for prod in self.binaryProductions {
@@ -406,7 +413,10 @@ struct CYKParser {
         // ── CYK 动态规划: 合并子区间 (方案A 多值 dp) ──
         // 多值 dp: 每个格子存 [brickName: TreeNode], 中间节点与最终砖共存 (对齐原版 Java LinkedList<TreeNode>[][])
         // v3: 保留 modKeys 调性一致性校验
-        for len in 2...n {
+        // 【D1 跨度剪枝】只合并到 maxSpan：任何真实砖和弦数 ≤ maxSpan，更长的格子只有 fallback
+        // 节点、永不参与真实产生式，故所有真实砖节点与不剪枝时逐格相同。
+        let spanLimit = Swift.min(n, maxSpan)
+        for len in 2...spanLimit {
             for i in 0...(n - len) {
                 let j = i + len
                 // dp[i][j] 初始化为 [:], 无需 best 单值变量

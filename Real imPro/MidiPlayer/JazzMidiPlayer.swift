@@ -467,6 +467,9 @@ class JazzMidiPlayer {
     private func playSoloTrackAsync(solo: [GeneratedMeasure], startMeasure: Int) async {
         let startIndex = max(0, min(startMeasure, solo.count - 1))
         guard startIndex < solo.count else { return }
+
+        // 连音持音兜底：记录 isTieStart 起音、尚未被同音高终点收掉的 MIDI；遇异音/休止/曲末强制止音，防长鸣
+        var heldTieNotes = Set<UInt8>()
         
         var cumulativeBeat = 0.0
         
@@ -521,12 +524,18 @@ class JazzMidiPlayer {
                 
                 if !note.isRest {
                     let midiNumber = convertPitchToMidi(pitch: note.pitch)
+                    // 坏连音线兜底：连音只能延续到紧邻的同音高事件；若遇到的是别的音，先收掉残留持音，避免长鸣
+                    let staleHeld = heldTieNotes.filter { $0 != midiNumber }
+                    for h in staleHeld { sampler.stopNote(h, onChannel: 0) }
+                    heldTieNotes.subtract(staleHeld)
                     if !note.isTieEnd { let j = Int.random(in: -3...3); sampler.startNote(midiNumber, withVelocity: UInt8(max(0, min(127, Int(velocity) + j))), onChannel: 0) }
                     
                     if note.isTieStart {
+                        heldTieNotes.insert(midiNumber)
                         let endSlot = (physicalStartBeat + mathDuration) * 120.0
                         do { try await safeSleep(to: endSlot) } catch { return }
                     } else {
+                        heldTieNotes.remove(midiNumber)
                         let sustainRatio = playDuration >= 0.5 ? 0.90 : 0.80
                         let sustainEndSlot = (physicalStartBeat + playDuration * sustainRatio) * 120.0
                         do { try await safeSleep(to: sustainEndSlot) } catch { return }
@@ -535,6 +544,9 @@ class JazzMidiPlayer {
                         do { try await safeSleep(to: releaseEndSlot) } catch { return }
                     }
                 } else {
+                    // 休止符意味着未闭合的连音被打断：强制收掉残留持音
+                    for h in heldTieNotes { sampler.stopNote(h, onChannel: 0) }
+                    heldTieNotes.removeAll()
                     let endSlot = (physicalStartBeat + mathDuration) * 120.0
                     do { try await safeSleep(to: endSlot) } catch { return }
                 }
@@ -542,6 +554,9 @@ class JazzMidiPlayer {
             }
             cumulativeBeat += currentBeatPosition
         }
+        // 曲末兜底：收掉所有未闭合的连音持音，防止自然结束后仍长鸣
+        for h in heldTieNotes { sampler.stopNote(h, onChannel: 0) }
+        heldTieNotes.removeAll()
         if !Task.isCancelled { DispatchQueue.main.async { self.onNotePlay?("") } }
     }
 
@@ -549,6 +564,9 @@ class JazzMidiPlayer {
     private func playSoloTrackWithGraces(solo: [GeneratedMeasure], startMeasure: Int, melodySwing: Double = 0.67) async {
         let startIndex = max(0, min(startMeasure, solo.count - 1))
         guard startIndex < solo.count else { return }
+
+        // 连音持音兜底：记录 isTieStart 起音、尚未被同音高终点收掉的 MIDI；遇异音/休止/曲末强制止音，防长鸣
+        var heldTieNotes = Set<UInt8>()
 
         var cumulativeBeat = 0.0
 
@@ -629,13 +647,19 @@ class JazzMidiPlayer {
 
                 if !note.isRest {
                     let midiNumber = convertPitchToMidi(pitch: note.pitch)
+                    // 坏连音线兜底：连音只能延续到紧邻的同音高事件；若遇到的是别的音，先收掉残留持音，避免长鸣
+                    let staleHeld = heldTieNotes.filter { $0 != midiNumber }
+                    for h in staleHeld { sampler.stopNote(h, onChannel: 0) }
+                    heldTieNotes.subtract(staleHeld)
                     if !note.isTieEnd { let j = Int.random(in: -3...3); sampler.startNote(midiNumber, withVelocity: UInt8(max(0, min(127, Int(velocity) + j))), onChannel: 0) }
 
                     if note.isTieStart {
+                        heldTieNotes.insert(midiNumber)
                         // 守恒：主干起点后移了倚音窗口，时长等额缩短，结束点与无倚音时一致
                         let endSlot = (mainStartBeat + mathDuration - graceWindowBeats) * 120.0
                         do { try await safeSleep(to: endSlot) } catch { return }
                     } else {
+                        heldTieNotes.remove(midiNumber)
                         // 短音(<半拍)发声比例 0.80→0.92：更连、起振更完整、快速经过音更易听清；长音维持 0.90
                         let sustainRatio = playDuration >= 0.5 ? 0.90 : 0.92
                         let sustainEndSlot = (mainStartBeat + playDuration * sustainRatio) * 120.0
@@ -645,6 +669,9 @@ class JazzMidiPlayer {
                         do { try await safeSleep(to: releaseEndSlot) } catch { return }
                     }
                 } else {
+                    // 休止符意味着未闭合的连音被打断：强制收掉残留持音
+                    for h in heldTieNotes { sampler.stopNote(h, onChannel: 0) }
+                    heldTieNotes.removeAll()
                     let endSlot = (mainStartBeat + mathDuration) * 120.0
                     do { try await safeSleep(to: endSlot) } catch { return }
                 }
@@ -652,6 +679,9 @@ class JazzMidiPlayer {
             }
             cumulativeBeat += currentBeatPosition
         }
+        // 曲末兜底：收掉所有未闭合的连音持音，防止自然结束后仍长鸣
+        for h in heldTieNotes { sampler.stopNote(h, onChannel: 0) }
+        heldTieNotes.removeAll()
         if !Task.isCancelled { DispatchQueue.main.async { self.onNotePlay?("") } }
     }
 

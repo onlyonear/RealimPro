@@ -3068,7 +3068,7 @@
           "chord": "B7",
           "notes": [
             {
-              "pitch": "Cb/4",
+              "pitch": "B/3",
               "isRest": false,
               "duration": "8",
               "isTriplet": false,
@@ -3163,7 +3163,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -3572,7 +3572,7 @@
           "chord": "B7",
           "notes": [
             {
-              "pitch": "Cb/4",
+              "pitch": "B/3",
               "isRest": false,
               "duration": "8",
               "isTriplet": false,
@@ -3882,7 +3882,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             },
             {
@@ -4555,7 +4555,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -4742,7 +4742,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -4962,7 +4962,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -5206,7 +5206,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -5582,7 +5582,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -5802,7 +5802,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -6046,7 +6046,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -6454,7 +6454,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -6674,7 +6674,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -6918,7 +6918,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -7294,7 +7294,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -7514,7 +7514,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -7758,7 +7758,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -7946,7 +7946,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -8395,7 +8395,7 @@
               "noteIndex": 0
             },
             {
-              "chord": "Dmaj7sus4",
+              "chord": "DM7sus4",
               "noteIndex": 3
             }
           ],
@@ -8405,7 +8405,7 @@
               "startSlot": 0
             },
             {
-              "chord": "Dmaj7sus4",
+              "chord": "DM7sus4",
               "startSlot": 240
             }
           ],
@@ -9243,7 +9243,7 @@
               "noteIndex": 0
             },
             {
-              "chord": "Dmaj7sus4",
+              "chord": "DM7sus4",
               "noteIndex": 3
             }
           ],
@@ -9253,7 +9253,7 @@
               "startSlot": 0
             },
             {
-              "chord": "Dmaj7sus4",
+              "chord": "DM7sus4",
               "startSlot": 240
             }
           ],
@@ -9915,7 +9915,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Gmaj9sus4",
+          "chord": "GM9sus4",
           "notes": [
             {
               "pitch": "D/5",
@@ -9952,7 +9952,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Gmaj9sus4",
+              "chord": "GM9sus4",
               "noteIndex": 0
             },
             {
@@ -9962,7 +9962,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Gmaj9sus4",
+              "chord": "GM9sus4",
               "startSlot": 0
             },
             {
@@ -10395,7 +10395,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Gmaj9sus4",
+          "chord": "GM9sus4",
           "notes": [
             {
               "pitch": "D/5",
@@ -10432,7 +10432,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Gmaj9sus4",
+              "chord": "GM9sus4",
               "noteIndex": 0
             },
             {
@@ -10442,7 +10442,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Gmaj9sus4",
+              "chord": "GM9sus4",
               "startSlot": 0
             },
             {
@@ -10983,7 +10983,7 @@
               "noteIndex": 0
             },
             {
-              "chord": "C#ø7",
+              "chord": "C#m7b5",
               "noteIndex": 0
             },
             {
@@ -10997,7 +10997,7 @@
               "startSlot": 0
             },
             {
-              "chord": "C#ø7",
+              "chord": "C#m7b5",
               "startSlot": 60
             },
             {
@@ -11339,7 +11339,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Gmaj9sus4",
+          "chord": "GM9sus4",
           "notes": [
             {
               "pitch": "D/5",
@@ -11376,7 +11376,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Gmaj9sus4",
+              "chord": "GM9sus4",
               "noteIndex": 0
             },
             {
@@ -11386,7 +11386,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Gmaj9sus4",
+              "chord": "GM9sus4",
               "startSlot": 0
             },
             {
@@ -11984,7 +11984,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "F#ø7",
+          "chord": "F#m7b5",
           "notes": [
             {
               "pitch": "C/5",
@@ -12029,7 +12029,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "F#ø7",
+              "chord": "F#m7b5",
               "noteIndex": 0
             },
             {
@@ -12039,7 +12039,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "F#ø7",
+              "chord": "F#m7b5",
               "startSlot": 0
             },
             {
@@ -13452,7 +13452,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -15086,7 +15086,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -16436,7 +16436,7 @@
               "noteIndex": 0
             },
             {
-              "chord": "Eø7",
+              "chord": "Em7b5",
               "noteIndex": 1
             }
           ],
@@ -16446,7 +16446,7 @@
               "startSlot": 0
             },
             {
-              "chord": "Eø7",
+              "chord": "Em7b5",
               "startSlot": 240
             }
           ],
@@ -22769,7 +22769,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Bø7",
+          "chord": "Bm7b5",
           "notes": [
             {
               "pitch": "B/4",
@@ -22814,7 +22814,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "noteIndex": 0
             },
             {
@@ -22824,7 +22824,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "startSlot": 0
             },
             {
@@ -28675,7 +28675,7 @@
               "noteIndex": 0
             },
             {
-              "chord": "Cø7",
+              "chord": "Cm7b5",
               "noteIndex": 3
             }
           ],
@@ -28685,7 +28685,7 @@
               "startSlot": 0
             },
             {
-              "chord": "Cø7",
+              "chord": "Cm7b5",
               "startSlot": 240
             }
           ],
@@ -29338,7 +29338,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -29898,7 +29898,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -29988,7 +29988,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Cø7",
+          "chord": "Cm7b5",
           "notes": [
             {
               "pitch": "F#/4",
@@ -30009,7 +30009,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Cø7",
+              "chord": "Cm7b5",
               "noteIndex": 0
             },
             {
@@ -30019,7 +30019,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Cø7",
+              "chord": "Cm7b5",
               "startSlot": 0
             },
             {
@@ -32495,7 +32495,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             },
             {
@@ -37525,7 +37525,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Aø7",
+          "chord": "Am7b5",
           "notes": [
             {
               "pitch": "C/5",
@@ -37570,7 +37570,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Aø7",
+              "chord": "Am7b5",
               "noteIndex": 0
             },
             {
@@ -37580,7 +37580,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Aø7",
+              "chord": "Am7b5",
               "startSlot": 0
             },
             {
@@ -37721,7 +37721,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Aø7",
+          "chord": "Am7b5",
           "notes": [
             {
               "pitch": "C/5",
@@ -37766,7 +37766,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Aø7",
+              "chord": "Am7b5",
               "noteIndex": 0
             },
             {
@@ -37776,7 +37776,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Aø7",
+              "chord": "Am7b5",
               "startSlot": 0
             },
             {
@@ -38794,7 +38794,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -39907,7 +39907,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Cø7",
+          "chord": "Cm7b5",
           "notes": [
             {
               "pitch": "Bb/4",
@@ -39944,13 +39944,13 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Cø7",
+              "chord": "Cm7b5",
               "noteIndex": 0
             }
           ],
           "chordSlots": [
             {
-              "chord": "Cø7",
+              "chord": "Cm7b5",
               "startSlot": 0
             }
           ],
@@ -39958,7 +39958,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Gø7",
+          "chord": "Gm7b5",
           "notes": [
             {
               "pitch": "Db/5",
@@ -39987,13 +39987,13 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Gø7",
+              "chord": "Gm7b5",
               "noteIndex": 0
             }
           ],
           "chordSlots": [
             {
-              "chord": "Gø7",
+              "chord": "Gm7b5",
               "startSlot": 0
             }
           ],
@@ -40122,10 +40122,10 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Fø7",
+          "chord": "Fm7b5",
           "notes": [
             {
-              "pitch": "Cb/5",
+              "pitch": "B/4",
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
@@ -40141,7 +40141,7 @@
               "isTieEnd": false
             },
             {
-              "pitch": "Cb/5",
+              "pitch": "B/4",
               "isRest": false,
               "duration": "q",
               "isTriplet": false,
@@ -40151,13 +40151,13 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Fø7",
+              "chord": "Fm7b5",
               "noteIndex": 0
             }
           ],
           "chordSlots": [
             {
-              "chord": "Fø7",
+              "chord": "Fm7b5",
               "startSlot": 0
             }
           ],
@@ -40487,7 +40487,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Dø7",
+          "chord": "Dm7b5",
           "notes": [
             {
               "pitch": "D/5",
@@ -40524,7 +40524,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Dø7",
+              "chord": "Dm7b5",
               "noteIndex": 0
             },
             {
@@ -40534,7 +40534,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Dø7",
+              "chord": "Dm7b5",
               "startSlot": 0
             },
             {
@@ -40667,7 +40667,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Cø7",
+          "chord": "Cm7b5",
           "notes": [
             {
               "pitch": "Bb/4",
@@ -40704,13 +40704,13 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Cø7",
+              "chord": "Cm7b5",
               "noteIndex": 0
             }
           ],
           "chordSlots": [
             {
-              "chord": "Cø7",
+              "chord": "Cm7b5",
               "startSlot": 0
             }
           ],
@@ -40718,7 +40718,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Gø7",
+          "chord": "Gm7b5",
           "notes": [
             {
               "pitch": "Db/5",
@@ -40747,13 +40747,13 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Gø7",
+              "chord": "Gm7b5",
               "noteIndex": 0
             }
           ],
           "chordSlots": [
             {
-              "chord": "Gø7",
+              "chord": "Gm7b5",
               "startSlot": 0
             }
           ],
@@ -40882,10 +40882,10 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Fø7",
+          "chord": "Fm7b5",
           "notes": [
             {
-              "pitch": "Cb/5",
+              "pitch": "B/4",
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
@@ -40901,7 +40901,7 @@
               "isTieEnd": false
             },
             {
-              "pitch": "Cb/5",
+              "pitch": "B/4",
               "isRest": false,
               "duration": "q",
               "isTriplet": false,
@@ -40911,13 +40911,13 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Fø7",
+              "chord": "Fm7b5",
               "noteIndex": 0
             }
           ],
           "chordSlots": [
             {
-              "chord": "Fø7",
+              "chord": "Fm7b5",
               "startSlot": 0
             }
           ],
@@ -41145,7 +41145,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Fø7",
+          "chord": "Fm7b5",
           "notes": [
             {
               "pitch": "Ab/4",
@@ -41158,13 +41158,13 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Fø7",
+              "chord": "Fm7b5",
               "noteIndex": 0
             }
           ],
           "chordSlots": [
             {
-              "chord": "Fø7",
+              "chord": "Fm7b5",
               "startSlot": 0
             }
           ],
@@ -43201,7 +43201,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Aø7",
+          "chord": "Am7b5",
           "notes": [
             {
               "pitch": "C/5",
@@ -43222,13 +43222,13 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Aø7",
+              "chord": "Am7b5",
               "noteIndex": 0
             }
           ],
           "chordSlots": [
             {
-              "chord": "Aø7",
+              "chord": "Am7b5",
               "startSlot": 0
             }
           ],
@@ -43548,7 +43548,7 @@
               "isTieEnd": true
             },
             {
-              "pitch": "Cb/5",
+              "pitch": "B/4",
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
@@ -48697,7 +48697,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Bø7",
+          "chord": "Bm7b5",
           "notes": [
             {
               "pitch": "F#/4",
@@ -48742,7 +48742,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "noteIndex": 0
             },
             {
@@ -48752,7 +48752,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "startSlot": 0
             },
             {
@@ -48831,7 +48831,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Bø7",
+          "chord": "Bm7b5",
           "notes": [
             {
               "pitch": "F#/4",
@@ -48884,7 +48884,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "noteIndex": 0
             },
             {
@@ -48894,7 +48894,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "startSlot": 0
             },
             {
@@ -49063,7 +49063,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -49083,7 +49083,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Bø7",
+          "chord": "Bm7b5",
           "notes": [
             {
               "pitch": "C/5",
@@ -49120,7 +49120,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "noteIndex": 0
             },
             {
@@ -49130,7 +49130,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "startSlot": 0
             },
             {
@@ -49209,7 +49209,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Bø7",
+          "chord": "Bm7b5",
           "notes": [
             {
               "pitch": "F#/4",
@@ -49262,7 +49262,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "noteIndex": 0
             },
             {
@@ -49272,7 +49272,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "startSlot": 0
             },
             {
@@ -49351,7 +49351,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Bø7",
+          "chord": "Bm7b5",
           "notes": [
             {
               "pitch": "F#/4",
@@ -49404,7 +49404,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "noteIndex": 0
             },
             {
@@ -49414,7 +49414,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "startSlot": 0
             },
             {
@@ -49583,7 +49583,7 @@
               "isRest": false,
               "duration": "w",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             }
           ],
@@ -49670,7 +49670,7 @@
               "duration": "8",
               "isTriplet": false,
               "isTieStart": false,
-              "isTieEnd": false
+              "isTieEnd": true
             },
             {
               "pitch": "G/5",
@@ -50019,7 +50019,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Bø7",
+          "chord": "Bm7b5",
           "notes": [
             {
               "pitch": "F/5",
@@ -50032,7 +50032,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "noteIndex": 0
             },
             {
@@ -50042,7 +50042,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "startSlot": 0
             },
             {
@@ -50121,7 +50121,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Bø7",
+          "chord": "Bm7b5",
           "notes": [
             {
               "pitch": "F#/4",
@@ -50174,7 +50174,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "noteIndex": 0
             },
             {
@@ -50184,7 +50184,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "startSlot": 0
             },
             {
@@ -50263,7 +50263,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Bø7",
+          "chord": "Bm7b5",
           "notes": [
             {
               "pitch": "F#/4",
@@ -50316,7 +50316,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "noteIndex": 0
             },
             {
@@ -50326,7 +50326,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "startSlot": 0
             },
             {
@@ -50531,7 +50531,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Bø7",
+          "chord": "Bm7b5",
           "notes": [
             {
               "pitch": "b/4",
@@ -50552,7 +50552,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "noteIndex": 0
             },
             {
@@ -50562,7 +50562,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Bø7",
+              "chord": "Bm7b5",
               "startSlot": 0
             },
             {
@@ -51091,7 +51091,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "F#ø7",
+          "chord": "F#m7b5",
           "notes": [
             {
               "pitch": "b/4",
@@ -51136,13 +51136,13 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "F#ø7",
+              "chord": "F#m7b5",
               "noteIndex": 0
             }
           ],
           "chordSlots": [
             {
-              "chord": "F#ø7",
+              "chord": "F#m7b5",
               "startSlot": 0
             }
           ],
@@ -51150,7 +51150,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Bmaj7sus4",
+          "chord": "BM7sus4",
           "notes": [
             {
               "pitch": "B/4",
@@ -51171,7 +51171,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Bmaj7sus4",
+              "chord": "BM7sus4",
               "noteIndex": 0
             },
             {
@@ -51181,7 +51181,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Bmaj7sus4",
+              "chord": "BM7sus4",
               "startSlot": 0
             },
             {
@@ -53463,7 +53463,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             },
             {
@@ -53779,7 +53779,7 @@
               "noteIndex": 0
             },
             {
-              "chord": "Fmaj7sus4",
+              "chord": "FM7sus4",
               "noteIndex": 1
             },
             {
@@ -53793,7 +53793,7 @@
               "startSlot": 0
             },
             {
-              "chord": "Fmaj7sus4",
+              "chord": "FM7sus4",
               "startSlot": 120
             },
             {
@@ -55015,7 +55015,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             },
             {
@@ -55331,7 +55331,7 @@
               "noteIndex": 0
             },
             {
-              "chord": "Fmaj7sus4",
+              "chord": "FM7sus4",
               "noteIndex": 1
             },
             {
@@ -55345,7 +55345,7 @@
               "startSlot": 0
             },
             {
-              "chord": "Fmaj7sus4",
+              "chord": "FM7sus4",
               "startSlot": 120
             },
             {
@@ -55493,7 +55493,7 @@
               "isRest": false,
               "duration": "h",
               "isTriplet": false,
-              "isTieStart": false,
+              "isTieStart": true,
               "isTieEnd": true
             },
             {
@@ -57775,7 +57775,7 @@
           "slotsPerMeasure": 480
         },
         {
-          "chord": "Aø7",
+          "chord": "Am7b5",
           "notes": [
             {
               "pitch": "b/4",
@@ -57812,7 +57812,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Aø7",
+              "chord": "Am7b5",
               "noteIndex": 0
             },
             {
@@ -57826,7 +57826,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Aø7",
+              "chord": "Am7b5",
               "startSlot": 0
             },
             {
@@ -66110,7 +66110,7 @@
               "duration": "w",
               "isTriplet": false,
               "isTieStart": true,
-              "isTieEnd": false
+              "isTieEnd": true
             }
           ],
           "chordAnnotations": [
@@ -66464,7 +66464,7 @@
           "slotsPerMeasure": 360
         },
         {
-          "chord": "Dmaj7sus4",
+          "chord": "DM7sus4",
           "notes": [
             {
               "pitch": "E/4",
@@ -66485,7 +66485,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Dmaj7sus4",
+              "chord": "DM7sus4",
               "noteIndex": 0
             },
             {
@@ -66495,7 +66495,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Dmaj7sus4",
+              "chord": "DM7sus4",
               "startSlot": 0
             },
             {
@@ -67088,7 +67088,7 @@
           "slotsPerMeasure": 360
         },
         {
-          "chord": "Dmaj7sus4",
+          "chord": "DM7sus4",
           "notes": [
             {
               "pitch": "E/4",
@@ -67109,7 +67109,7 @@
           ],
           "chordAnnotations": [
             {
-              "chord": "Dmaj7sus4",
+              "chord": "DM7sus4",
               "noteIndex": 0
             },
             {
@@ -67119,7 +67119,7 @@
           ],
           "chordSlots": [
             {
-              "chord": "Dmaj7sus4",
+              "chord": "DM7sus4",
               "startSlot": 0
             },
             {

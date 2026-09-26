@@ -276,9 +276,14 @@ struct ContentView: View {
     }
 
 
+    /// 统一稳定 key（标题+作曲家，不区分大小写，去空格）；歌单去重与外部旋律绑定共用同一口径
+    private static func normalizedSongKey(title: String, composer: String) -> String {
+        "\(title.trimmingCharacters(in: .whitespaces).lowercased())|\(composer.trimmingCharacters(in: .whitespaces).lowercased())"
+    }
+
     /// 统一去重 key（标题+作曲家，不区分大小写，去空格）
     private func dedupKey(for song: JazzSong) -> String {
-        "\(song.title.trimmingCharacters(in: .whitespaces).lowercased())|\(song.composer.trimmingCharacters(in: .whitespaces).lowercased())"
+        Self.normalizedSongKey(title: song.title, composer: song.composer)
     }
 
     // MARK: 导入即命名分组（排在 My Songs / 内置 Classic Jazz 之后）
@@ -302,6 +307,25 @@ struct ContentView: View {
                 playlists.insert(gp, at: pos)
                 at = pos + 1
             }
+        }
+    }
+
+    /// 启动时扫描 Documents/ImportedMelodies/*.json，重建「来源歌单 →（标题|作曲家 → 旋律）」运行时索引。
+    /// 歌曲本身已由 importedPlaylists(UserDefaults) 持久化，这里只补旋律层。
+    /// 旋律只绑定到“提供它的那个歌单”，不全局按曲名共享，避免同名 iRealPro 和声单串到别的歌单的旋律。
+    private func loadExternalMelodies() {
+        let dir = Self.externalMelodyDir
+        guard let files = try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil) else { return }
+        for f in files where f.pathExtension.lowercased() == "json" {
+            guard let data = try? Data(contentsOf: f),
+                  let lib = try? BuiltinMelodyLibrary.load(from: data) else { continue }
+            // 归属与导入路由一致：单曲导入进 My Songs，多首以库名建命名歌单
+            let owner = lib.songs.count == 1 ? mySongsPlaylistName : lib.name
+            var inner = externalMelodies[owner] ?? [:]
+            for bs in lib.songs {
+                inner[dedupKey(for: bs.song)] = bs.melody
+            }
+            externalMelodies[owner] = inner
         }
     }
 
@@ -459,12 +483,69 @@ struct ContentView: View {
         var songs: [JazzSong]
         var error: String?
         var groupName: String? = nil
+        /// 外部旋律 JSON 导入时携带的「标题|作曲家 → 原旋律」索引（仅本文件；iRealPro 导入为 nil）
+        var externalMelodies: [String: [GeneratedMeasure]]? = nil
+        /// MusicXML 成功导入后的说明（风格固定 / 速度）；其余导入为 nil
+        var reportNote: String? = nil
     }
 
-    /// 从文件 URL 读取并解析 iReal Pro 歌曲（后台线程调用）
+    /// Documents/ImportedMelodies：持久化外部导入的旋律 JSON（GeneratedMeasure 不可 Codable，
+    /// 故存原始文件，启动时再解码建索引）。
+    private static var externalMelodyDir: URL {
+        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return docs.appendingPathComponent("ImportedMelodies", isDirectory: true)
+    }
+
+    private static func persistExternalMelodyFile(data: Data, name: String) {
+        let dir = externalMelodyDir
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let safe = name.replacingOccurrences(of: "/", with: "_").replacingOccurrences(of: ":", with: "_")
+        try? data.write(to: dir.appendingPathComponent("\(safe).json"), options: .atomic)
+    }
+
+    /// 从文件 URL 读取并解析（后台线程）：.json 走旋律库解码器；其余走 iReal Pro 解析
     private static func importFromFile(url: URL) -> FileImportResult {
         let didAccess = url.startAccessingSecurityScopedResource()
         defer { if didAccess { url.stopAccessingSecurityScopedResource() } }
+
+        // —— 旋律 JSON 导入分支 ——
+        if url.pathExtension.lowercased() == "json" {
+            guard let data = try? Data(contentsOf: url) else {
+                return FileImportResult(songs: [], error: NSLocalizedString("无法读取 JSON 文件。", comment: ""))
+            }
+            do {
+                let lib = try BuiltinMelodyLibrary.load(from: data)
+                var mel: [String: [GeneratedMeasure]] = [:]
+                for bs in lib.songs {
+                    mel[Self.normalizedSongKey(title: bs.song.title, composer: bs.song.composer)] = bs.melody
+                }
+                persistExternalMelodyFile(data: data, name: lib.name)
+                return FileImportResult(songs: lib.playlist.songs, error: nil,
+                                        groupName: lib.name, externalMelodies: mel)
+            } catch {
+                return FileImportResult(songs: [], error: NSLocalizedString("旋律 JSON 解析失败。", comment: ""))
+            }
+        }
+
+        // —— MusicXML 导入分支 —— .mxl(压缩)二期；.musicxml 直接走；.xml 先嗅探 <score-partwise>
+        let ext = url.pathExtension.lowercased()
+        if ext == "mxl" {
+            return FileImportResult(songs: [], error: NSLocalizedString(
+                "暂不支持压缩的 .mxl 文件，请在“文件”App 中解压或另存为 .musicxml/.xml 后再导入。", comment: ""))
+        }
+        if ext == "musicxml" {
+            guard let data = try? Data(contentsOf: url) else {
+                return FileImportResult(songs: [], error: NSLocalizedString("无法读取文件。", comment: ""))
+            }
+            return Self.importMusicXML(data: data, url: url)
+        }
+        if ext == "xml", let data = try? Data(contentsOf: url) {
+            let head = String(data: data.prefix(8192), encoding: .utf8) ?? ""
+            if head.contains("score-partwise") {
+                return Self.importMusicXML(data: data, url: url)
+            }
+            // 非 score-partwise 的 .xml：当作普通文本，继续走下面的 iReal Pro 解析
+        }
 
         guard let content = try? String(contentsOf: url, encoding: .utf8) else {
             return FileImportResult(songs: [], error: NSLocalizedString("无法读取文件，请确认文件编码为 UTF-8。", comment: ""))
@@ -481,10 +562,45 @@ struct ContentView: View {
         return FileImportResult(songs: songs, error: nil, groupName: groupName)
     }
 
+    /// MusicXML → 解码为曲库 → 落库 ImportedMelodies，返回带旋律索引的导入结果
+    private static func importMusicXML(data: Data, url: URL) -> FileImportResult {
+        let fallback = url.deletingPathExtension().lastPathComponent
+        do {
+            let json = try MusicXMLImporter.libraryForApp(data: data, fallbackTitle: fallback)
+            let lib = try BuiltinMelodyLibrary.load(from: json)
+            guard let first = lib.songs.first else {
+                return FileImportResult(songs: [], error: NSLocalizedString("MusicXML 中未解析出有效乐曲。", comment: ""))
+            }
+            // 唯一文件名（标题|作曲家），重导覆盖、不同曲不互相覆盖
+            let key = Self.normalizedSongKey(title: first.title, composer: first.composer)
+            let safe = ("mx_" + key)
+                .replacingOccurrences(of: "|", with: "_")
+                .replacingOccurrences(of: "/", with: "_")
+                .replacingOccurrences(of: ":", with: "_")
+            persistExternalMelodyFile(data: json, name: safe)
+            var mel: [String: [GeneratedMeasure]] = [:]
+            for bs in lib.songs {
+                mel[Self.normalizedSongKey(title: bs.title, composer: bs.composer)] = bs.melody
+            }
+            let tempo = first.song.tempo
+            let note = String(format: NSLocalizedString(
+                "已导入《%@》。MusicXML 无可靠风格字段，伴奏统一按 Medium Swing（中等摇摆）处理；速度 %d BPM。原曲旋律与和弦可直接显示、播放与即兴。",
+                comment: ""), first.title, tempo)
+            return FileImportResult(songs: lib.playlist.songs, error: nil, groupName: nil,
+                                    externalMelodies: mel, reportNote: note)
+        } catch let e as MusicXMLImportError {
+            return FileImportResult(songs: [], error: e.description)
+        } catch {
+            return FileImportResult(songs: [], error: NSLocalizedString(
+                "MusicXML 解析失败，请确认是单 Part 的 lead sheet（和弦+旋律）。", comment: ""))
+        }
+    }
+
     /// 处理文件导入结果：以命名歌单形式落库（同名合并去重），再决定提示
     private func handleImportResult(_ result: FileImportResult) {
         if let error = result.error, result.songs.isEmpty {
             fileImportError = error
+            importReportNote = nil
             importedTotalCount = 0
             importSkippedCount = 0
             mixedAlertCount = 0
@@ -493,6 +609,16 @@ struct ContentView: View {
         }
 
         fileImportError = nil
+        importReportNote = result.reportNote
+
+        // 外部旋律 JSON：旋律并入“来源歌单”作用域（iRealPro 导入为 nil，无操作）。
+        // 归属与导入路由一致：单曲进 My Songs、多首进命名歌单；不再全局按曲名挂旋律。
+        if let em = result.externalMelodies {
+            let owner = result.songs.count == 1 ? mySongsPlaylistName : (result.groupName ?? mySongsPlaylistName)
+            var inner = externalMelodies[owner] ?? [:]
+            inner.merge(em) { (_, new) in new }
+            externalMelodies[owner] = inner
+        }
 
         let outcome = importSongsUnified(result.songs, proposedName: result.groupName)
         importSkippedCount = outcome.skipped
@@ -502,7 +628,7 @@ struct ContentView: View {
         let hasMixed = mixedAlertCount > 0
         let hasSkipped = importSkippedCount > 0
         let hasNew = importedTotalCount > 0
-        showImportResultAlert = hasMixed || hasSkipped || !hasNew
+        showImportResultAlert = hasMixed || hasSkipped || !hasNew || (importReportNote != nil)
     }
 
     /// 从 irealb:// 链接提取歌单名：=== 分隔的第一段若不是一首合法歌曲（字段不足）即为歌单名
@@ -551,12 +677,16 @@ struct ContentView: View {
     @State private var showFilePicker = false        // 🌟 系统文件选择器
     @State private var isLoadingFile = false         // 🌟 文件导入 loading
     @State private var fileImportError: String? = nil // 🌟 文件级错误消息
+    @State private var importReportNote: String? = nil // MusicXML 成功导入说明（风格/速度）
     @State private var playlists: [JazzPlaylist] = ContentView.loadPlaylists()
     @State private var importedPlaylists: [JazzPlaylist] = ContentView.loadImportedPlaylists()
     @State private var selectedPlaylistIndex = 0
 
     // MARK: - 内置 Classic Jazz（公共领域80首，Bundle 加载；加载失败为 nil 时该功能整体优雅缺席）
     @State private var builtinLibrary: BuiltinClassicLibrary? = ContentView.loadBuiltinLibrary()
+    /// 外部导入旋律索引（来自 Documents/ImportedMelodies，启动重建）：
+    /// [来源歌单名: [标题|作曲家(小写): 旋律]]；旋律只在其来源歌单内命中，不跨歌单串
+    @State private var externalMelodies: [String: [String: [GeneratedMeasure]]] = [:]
     // 整组隐藏记录（按组名）；内置组每次启动由 Bundle 重建，故用 UserDefaults 持久化“隐藏”
     @State private var hiddenBuiltinPlaylistNames: Set<String> = Set(UserDefaults.standard.stringArray(forKey: "hiddenBuiltinPlaylistNames") ?? [])
     // 内置单曲删除记录（稳定键 = 标题|作曲家，不用易变的 UUID）
@@ -579,6 +709,9 @@ struct ContentView: View {
     @State private var hasGeneratedSolo: Bool = false // 🌟 区分屏幕上当前是“骨架谱”还是“真实的 Solo”
    @State private var isGenerating: Bool = false       // 🌟 P0-1: 生成中状态（防重入 + 转圈遮罩）
    @State private var generationTask: Task<Void, Never>? // 🌟 P0-1: 后台生成任务句柄（离开页面/切歌时可取消）
+        #if DEBUG
+        @State private var debugLSTM: Bool = false   // [LSTM P1] DEBUG-only 调试开关（默认关）
+        #endif
     
     // 🌟 新增：播放状态机与跳转锚点
     @State private var isPlaying: Bool = false
@@ -595,6 +728,10 @@ struct ContentView: View {
     @AppStorage("transformEnabled") private var enableTransform: Bool = false  // [Hunk10] 调音台圆点，默认关
     @AppStorage("transformMusician") private var selectedTransformMusician: String = TransformMusicianRegistry.defaultMusician  // [Hunk10] guide/grammar 两链共用，默认 My
     @AppStorage("guideColorEnabled") private var guideColorEnabled: Bool = false  // [Guide Color 圆点 20260914] Guide 整流色彩档，默认关；仅 Guide 且 TRANSFORM 点亮时生效
+    // [默认值翻转 20260925] Basic/Master 整流「是否启用色彩」：默认 false=Java spell-only，手动点亮才加色彩。
+    //   旧值封存（原默认 true=grammar 默认带色彩、听感零变化）：@AppStorage("grammarColorEnabled") ... = true
+    //   关 → grammar 整流走 Java 出厂 spell-only（RectifyMode.javaSpellOnly）。与 guideColorEnabled 分键、切组互不污染。
+    @AppStorage("grammarColorEnabled") private var grammarColorEnabled: Bool = false  // 默认 false=Java spell-only，手动点亮才加色彩
     // 整流(Rectify)固定为"全拍对齐原版"(.allBeats)，不再提供 UI 切换；
     // 三档逻辑仍保留在 GrammarLickGlue.swift，调试时改下方 grammarStrategy.rectifyMode 赋值即可。
     // D4 色彩音池档位（conservative 基础 / full 扩展全量），调音台切换
@@ -636,9 +773,22 @@ struct ContentView: View {
 
     // MARK: - [方案21] 旋律可用性 + 统一显示源
     /// 当前选中歌曲是否带内置原曲旋律（无旋律=导入/iRealPro，不出现 Original/Solo 对照胶囊）
+    /// 统一按歌曲取原旋律：先查内置 Classic Jazz，再查外部导入旋律索引。
+    private func melody(for song: JazzSong) -> [GeneratedMeasure]? {
+        // 内置 Classic Jazz：按歌曲对象 id 精确匹配（不会串到导入曲）
+        if let m = builtinLibrary?.melody(for: song) { return m }
+        // 外部导入旋律：只在“这首歌所属的那个歌单”里按 标题|作曲家 命中；
+        // iRealPro 歌单从不提供旋律，同名 iRealPro 曲不会再错误挂上别的歌单的旋律。
+        let key = dedupKey(for: song)
+        if let owner = playlists.first(where: { $0.songs.contains { $0.id == song.id } })?.name {
+            return externalMelodies[owner]?[key]
+        }
+        return nil
+    }
+
     private var hasMelodyForCurrentSong: Bool {
-        guard let s = selectedSong, let lib = builtinLibrary else { return false }
-        return lib.melody(for: s) != nil
+        guard let s = selectedSong else { return false }
+        return melody(for: s) != nil
     }
 
     /// 当前【真正用于显示/播放/高亮】的小节：
@@ -648,7 +798,7 @@ struct ContentView: View {
     /// 写入仍只写 generatedSolo；所有显示/播放/高亮读取点统一读本属性，保证切换显示时同源、不重新随机。
     private var displayedMeasures: [GeneratedMeasure] {
         if showOriginalMelody, hasGeneratedImprovisation, hasMelodyForCurrentSong,
-           let s = selectedSong, let orig = builtinLibrary?.melody(for: s) {
+           let s = selectedSong, let orig = melody(for: s) {
             if s.key != selectedKey {
                 return MelodyTransformAdapter.transposeMeasures(
                     orig,
@@ -716,6 +866,35 @@ struct ContentView: View {
         
         if isRest { dur += "r" }
         return (dur, tup)
+    }
+
+    /// [新增 2026-09-23] 只计算并返回某首歌在指定调下的级数分析（不改显示、不填休止）。
+    /// 供「铺原旋律」分支选歌/转调时刷新 currentAnalysis，避免 #按钮显示上一首的陈旧分析。
+    /// 与 generateEmptyRoadmap 的分析构建逻辑同源（过滤空/NC、带 section 标记、按调号显式主调）。
+    private func buildSongAnalysis(forSong song: JazzSong, key: String) -> AnalysisResult {
+        let workSong = (song.key == key) ? song : Self.transposeSong(song, to: key)
+        let timeSig = workSong.timeSignature ?? "4/4"
+        let tsNum = Int(timeSig.split(separator: "/").first ?? "4") ?? 4
+        let roadmap = JazzRoadmap(title: workSong.title, tempo: workSong.tempo)
+        for (measureIndex, measureChords) in workSong.measures.enumerated() {
+            let measureDurations = measureIndex < workSong.measureDurations.count
+                ? workSong.measureDurations[measureIndex] : [4.0]
+            let pairs = zip(measureChords, measureDurations).filter { chord, _ in
+                let clean = chord.trimmingCharacters(in: .whitespacesAndNewlines)
+                return !clean.isEmpty && clean != "NC" && clean != "N.C."
+            }
+            for (chordName, duration) in pairs {
+                let cleanChord = chordName.trimmingCharacters(in: .whitespacesAndNewlines)
+                let isSectionStart = workSong.sectionMarkers[measureIndex] != nil
+                roadmap.append(block: ChordBlock(name: cleanChord, duration: duration,
+                                                 isSectionStart: isSectionStart))
+            }
+        }
+        let keyInfo = KeyParser.parseKey(key)
+        return PostProcessorFull.analyze(roadmap: roadmap,
+                                         tonicPC: keyInfo.tonicPC,
+                                         mode: keyInfo.mode,
+                                         beatsPerMeasure: Double(tsNum))
     }
 
     private func generateEmptyRoadmap() {
@@ -920,6 +1099,7 @@ struct ContentView: View {
         let transformMusician = selectedTransformMusician  // [Hunk10] 两链共用所选乐手
         let colorRaw = colorModeRaw
         let guideColor = guideColorEnabled  // [Guide Color 圆点] 捕获到后台线程（仅 Guide 整流三态用）
+        let grammarColor = grammarColorEnabled  // [Grammar Color 圆点 20260925] 捕获到后台线程（grammar spell-only 分流用）
         // Q4 定稿固定 Smooth，不再从 UI 读 octaveRaw（恢复 A/B 时取消注释并同步下方调用/签名/注入）
         // let octaveRaw = octaveModeRaw
         // 转调在主线程快速完成（纯值操作），重计算全部放后台
@@ -929,7 +1109,7 @@ struct ContentView: View {
         isGenerating = true
 
         generationTask = Task.detached(priority: .userInitiated) { [self] in
-            let result = self.generateMeasuresWorker(song: songToUse, key: key, group: group, algorithm: algorithm, guidePreset: guidePreset, enableTransform: transform, transformMusician: transformMusician, colorRaw: colorRaw, guideColorEnabled: guideColor)
+            let result = self.generateMeasuresWorker(song: songToUse, key: key, group: group, algorithm: algorithm, guidePreset: guidePreset, enableTransform: transform, transformMusician: transformMusician, colorRaw: colorRaw, guideColorEnabled: guideColor, grammarColorEnabled: grammarColor)
             await MainActor.run {
                 self.generatedSolo = result.measures
                 self.soloVersion = UUID()
@@ -944,7 +1124,7 @@ struct ContentView: View {
     }
 
     /// 重计算主体（纯函数，不触碰 @State；nonisolated 确保在后台线程执行）
-    nonisolated private func generateMeasuresWorker(song: JazzSong, key: String, group: ImproAlgorithmGroup = .basic, algorithm: ImproAlgorithmType, guidePreset: GuideLinePreset = .smooth, enableTransform: Bool, transformMusician: String, colorRaw: String, guideColorEnabled: Bool = false) -> (measures: [GeneratedMeasure], analysis: AnalysisResult?) {
+    nonisolated private func generateMeasuresWorker(song: JazzSong, key: String, group: ImproAlgorithmGroup = .basic, algorithm: ImproAlgorithmType, guidePreset: GuideLinePreset = .smooth, enableTransform: Bool, transformMusician: String, colorRaw: String, guideColorEnabled: Bool = false, grammarColorEnabled: Bool = false) -> (measures: [GeneratedMeasure], analysis: AnalysisResult?) {  // [默认值翻转] grammarColorEnabled 旧默认 true 封存，现 false=Java spell-only
         let actualSong = song   // 调用方已完成转调
         let isGuide = (group == .guide)   // Guide Tone Line 分支：走引导音策略，不走 grammar 专属 mode/合并
 
@@ -1019,14 +1199,25 @@ struct ContentView: View {
             guideStrategy.allowColor  = true
             activeStrategy = guideStrategy
         } else {
+        // [LSTM P1] DEBUG 调试分支可改走 LSTM（默认关）；Release 恒 false、正常用户路径走不到。
+        #if DEBUG
+        let useLSTM = LSTMDebugSwitch.useLSTM
+        #else
+        let useLSTM = false
+        #endif
+        if useLSTM {
+            activeStrategy = LSTMStrategy()
+        } else {
         guard let grammarStrategy = algorithm.getStrategyInstance() else { return ([], nil) }
         grammarStrategy.transformMode = enableTransform ? .grammarWithTransform : .rawGrammar
         // 整流固定为全拍对齐原版（三档逻辑保留在 GrammarLickGlue，调试可在此改 .strongBeat/.off）
-        grammarStrategy.rectifyMode = .allBeats
+        // [Grammar Color 圆点 20260925] 圆点 ON（默认）→ .allBeats 一音不变；OFF → .javaSpellOnly（Java 出厂 spell-only）
+        grammarStrategy.rectifyMode = grammarColorEnabled ? .allBeats : .javaSpellOnly
         grammarStrategy.colorMode = ColorPaletteMode(rawValue: colorRaw) ?? .conservative
         // Q4 盲听定稿（2026-09-06）：固定 Smooth（就近上一音，真机听感更佳）；Leaps/rooted 已放弃、算法保留备查。
         grammarStrategy.octaveMode = .smooth
         activeStrategy = grammarStrategy
+        }
         }
         var analysis: AnalysisResult? = nil   // 🌟 调性分析结果，通过返回值带回主线程
         
@@ -1129,12 +1320,25 @@ struct ContentView: View {
         var remainingSlots = 0
         var currentGNote: EnrichedNote? = nil
         let totalMeasures = actualSong.measures.count
-        
+        // [2026-09-23 弱起对齐补丁·新增] 前置空小节（pickup）数量：这些小节不占 roadmap 内容，
+        // 引擎 solo 从首个真和弦小节起算；切分时前 pickup 小节整小节补休止、不消费生成流，
+        // 使引擎栏 k 落进显示小节 k+pickup（与级数分析、整流和弦上下文对齐）。
+        let pickupMeasureCount = SongMeasureMap.leadingPickupCount(actualSong.measures)
+
         var pendingTie = false // 🌟 恢复跨小节连线状态追踪！
         var measurePendingTie: [Bool] = [] // 🔍 TIE BUG 追踪：捕获每小节进入时的 pendingTie
 
-        for _ in 0..<totalMeasures {
+        // [旧码封存 2026-09-23] 原循环表头不感知弱起，导致 32 栏 solo 被切进 33 小节、整体左移：
+        // for _ in 0..<totalMeasures {
+        for mIndex in 0..<totalMeasures {
             measurePendingTie.append(pendingTie) // 🔍 快照：进入本小节前的跨小节连线状态
+            // [2026-09-23 弱起对齐补丁·新增] 弱起小节：生成内容不覆盖，整小节休止，不消费 globalEnriched
+            if mIndex < pickupMeasureCount {
+                measureRawChunks.append([EnrichedNote(midiPitch: -1,
+                                                      durationSlots: profile.slotsPerMeasure,
+                                                      gracePitches: [])])
+                continue
+            }
             var chunksInMeasure: [EnrichedNote] = []
             var slotsInMeasure = 0
 
@@ -1788,6 +1992,8 @@ struct ContentView: View {
             } message: {
                 if let fileError = fileImportError {
                     Text(fileError)
+                } else if let note = importReportNote {
+                    Text(note)
                 } else if importedTotalCount == 0 {
                     Text(NSLocalizedString("All songs already exist.", comment: ""))
                 } else if mixedAlertCount > 0 && importSkippedCount > 0 {
@@ -1814,6 +2020,7 @@ struct ContentView: View {
             }
             installBuiltinPlaylistIfNeeded()   // 把 Classic Jazz 追加到 My Songs 之后
             installImportedPlaylistsIfNeeded() // 用户导入的命名歌单排在 Classic Jazz 之后
+            loadExternalMelodies()             // 重建外部导入旋律索引
             if selectedSong == nil {
                 selectedSong = currentPlaylist.songs.first
             }
@@ -1823,6 +2030,45 @@ struct ContentView: View {
                 selectedStyle = matchStyleMode(from: song.style)
             }
         }
+        #if DEBUG
+        .task {
+            // [LSTM P1] DEBUG-only 测试钩子：仅当启动参数含 -lstm / -autogen 时动作，正常路径惰性。
+            let dbgArgs = ProcessInfo.processInfo.arguments
+            if dbgArgs.contains("-lstm") {
+                LSTMDebugSwitch.useLSTM = true
+                debugLSTM = true
+            }
+            if dbgArgs.contains("-landscape") {
+                DebugOrientationDelegate.forceLandscapeIfNeeded()
+            }
+            if let si = dbgArgs.firstIndex(of: "-song"), si + 1 < dbgArgs.count {
+                let needle = dbgArgs[si + 1]
+                installBuiltinPlaylistIfNeeded()
+                var found = playlists.flatMap({ $0.songs }).first(where: { ($0.title ?? "").localizedCaseInsensitiveContains(needle) })
+                if found == nil {
+                    for _ in 0..<20 {
+                        try? await Task.sleep(nanoseconds: 50_000_000)
+                        installBuiltinPlaylistIfNeeded()
+                        found = playlists.flatMap({ $0.songs }).first(where: { ($0.title ?? "").localizedCaseInsensitiveContains(needle) })
+                        if found != nil { break }
+                    }
+                }
+                if let match = found {
+                    selectedSong = match
+                    tempo = match.tempo
+                    selectedKey = match.key
+                }
+            }
+            if dbgArgs.contains("-autogen") {
+                for _ in 0..<30 where selectedSong == nil {
+                    try? await Task.sleep(nanoseconds: 100_000_000)
+                }
+                try? await Task.sleep(nanoseconds: 800_000_000)
+                let jumpToSolo: Bool = !dbgArgs.contains("-showoriginal")
+                runJazzGenerationPipeline(jumpToSolo: jumpToSolo)
+            }
+        }
+        #endif
         .onDisappear {
             generationTask?.cancel()   // 🌟 P0-1: 离开页面时取消后台生成，避免白跑
         }
@@ -1844,12 +2090,14 @@ struct ContentView: View {
                 self.isPlaying = false
                 self.isPaused = false
 
-                if let builtinMelody = builtinLibrary?.melody(for: song) {
+                if let builtinMelody = melody(for: song) {
                     // 内置 Classic Jazz：直接铺原曲旋律（自带和弦），选完即可看、即可播放，不走骨架/算法
                     self.generatedSolo = builtinMelody
                     self.hasGeneratedSolo = true   // 让播放控制可用（它们只认这个开关）
                     self.isShowingBuiltinMelody = true
                     self.soloVersion = UUID()
+                    // [新增 2026-09-23] 铺原旋律分支此前不刷新级数，#按钮会显示上一首的陈旧分析；此处按本曲重建
+                    self.currentAnalysis = self.buildSongAnalysis(forSong: song, key: self.selectedKey)
                 } else {
                     // 用户导入的 iRealPro 歌：维持现状——先出和弦骨架，等用户点生成
                     self.isShowingBuiltinMelody = false
@@ -1865,12 +2113,14 @@ struct ContentView: View {
                 if didGenerateInCurrentGroup {
                     // Guide/Basic/Master 已在本组点过生成 → 重跑对应算法（Transform 开则取新随机，属既有行为）
                     runJazzGenerationPipeline(jumpToSolo: false)
-                } else if let s = selectedSong, let orig = builtinLibrary?.melody(for: s) {
+                } else if let s = selectedSong, let orig = melody(for: s) {
                     // 仅铺了内置原旋律、从未在本组生成 → 转原旋律继续铺，不跳成 guide/grammar solo
                     let semis = Self.semitoneDifference(from: originalKey, to: newKey)
                     self.generatedSolo = MelodyTransformAdapter.transposeMeasures(
                         orig, by: semis, preferSharps: Self.isSharpKey(newKey))
                     self.soloVersion = UUID()
+                    // [新增 2026-09-23] 原旋律未生成即转调：级数同步换到新调（与选歌分支同根因的对称路径）
+                    self.currentAnalysis = self.buildSongAnalysis(forSong: s, key: newKey)
                 } else {
                     // 只是一张骨架谱：转调后仅刷新和弦骨架（原行为）
                     generateEmptyRoadmap()
@@ -2247,6 +2497,19 @@ struct ContentView: View {
 
             // 🌟 P0-2: 分隔线左右留白 12→8，为生成键 44pt 热区腾水平空间（纯装饰，不影响信息控件）
             Rectangle().fill(Color.gray.opacity(0.2)).frame(width: 1, height: 22).padding(.horizontal, 8)
+            #if DEBUG
+            Button(action: {
+                debugLSTM.toggle()
+                LSTMDebugSwitch.useLSTM = debugLSTM
+            }) {
+                Image(systemName: "brain.head.profile")
+                    .font(.title3)
+                    .foregroundColor(debugLSTM ? .green : .gray)
+            }
+            .buttonStyle(PressableButtonStyle())
+            .frame(width: 44, height: 44)
+            .contentShape(Rectangle())
+            #endif
 
             Button(action: {
                 triggerImpactHaptic(.medium)   // 🌟 P0-2
@@ -2296,6 +2559,7 @@ struct ContentView: View {
             grammarFileName: selectedAlgorithm.grammarFileName,
             showAnalysis: showAnalysis,
             analysis: currentAnalysis,
+            pickupMeasureCount: SongMeasureMap.leadingPickupCount(selectedSong?.measures ?? []),
             onNoteClick: { noteId in
                 // 🌟 核心修复：先解除播放器的回调绑定！
                 // 彻底断绝 stop() 异步发出的空字符串清理信号，防止它误伤和覆盖我们刚刚手动点选的高亮 ID！
@@ -2419,7 +2683,9 @@ struct ContentView: View {
                         enableTransform: $enableTransform,
                         selectedTransformMusician: $selectedTransformMusician,
                         guideColorEnabled: $guideColorEnabled,                 // [Guide Color 圆点]
-                        // [方案21] Color 圆点恢复仅 Guide 可点（Basic/Master 置灰）；不再有 embellishLocked
+                        grammarColorEnabled: $grammarColorEnabled,             // [Grammar Color 圆点 20260925]
+                        // [Grammar Color 圆点 20260925] Color 圆点资格扩为 Guide + Basic/Master：
+                        //   isColorDotEligible=true=Guide（仍要求 TRANSFORM 点亮）；false=Basic/Master（不要求 TRANSFORM）。
                         isColorDotEligible: selectedAlgorithmGroup == .guide,
                         isPlaying: isPlaying
                     )

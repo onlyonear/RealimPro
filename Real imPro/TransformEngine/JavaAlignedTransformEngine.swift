@@ -105,13 +105,19 @@ extension TransformEngine {
 
         // MARK: 和弦时间线
 
+        /// 【D4】按 slot 二分定位当前和弦：chordStarts 按 start 升序，找 start <= slot 的最后一个；
+        /// slot 早于首个边界时回退首个和弦（与旧全扫结果逐字一致），复杂度 O(log 和弦数)。
         private func chordAt(_ slot: Int) -> ChordBlock {
-            guard let first = chordStarts.first else {
+            guard !chordStarts.isEmpty else {
                 return ChordBlock(name: "NC", duration: 0)
             }
-            var cur = first.chord
-            for e in chordStarts where slot >= e.start { cur = e.chord }
-            return cur
+            var lo = 0
+            var hi = chordStarts.count - 1
+            while lo < hi {
+                let mid = (lo + hi + 1) / 2
+                if chordStarts[mid].start <= slot { lo = mid } else { hi = mid - 1 }
+            }
+            return chordStarts[lo].chord
         }
 
         // MARK: weight 装袋 →（真洗牌 / 保序）→ 按 id 去重保留首次出现（等价 Java get(0)+removeAll）
