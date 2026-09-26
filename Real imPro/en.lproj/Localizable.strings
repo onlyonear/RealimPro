@@ -1,0 +1,61 @@
+/* English localization for Real imPro */
+
+// Toolbar
+"未选择歌曲" = "No Song Selected";
+"调号" = "Key";
+
+// Empty state
+"请从左侧选择一首歌曲" = "Select a song from the left";
+
+// Sidebar
+"搜索歌曲" = "Search Songs";
+"导入曲谱" = "Import Chart";
+
+// Settings
+"算法选择已移动至顶部工具栏" = "Algorithm selection moved to top toolbar";
+"音域范围" = "Note Range";
+"最低音 MIDI:" = "Lowest MIDI:";
+"最高音 MIDI:" = "Highest MIDI:";
+"⚙️ 即兴参数设置" = "Impro Parameters";
+"完成" = "Done";
+
+// Import
+"点下方按钮检测剪贴板" = "Tap to check clipboard";
+"导入的歌单" = "Imported Playlist";
+"正在检测剪贴板..." = "Checking clipboard...";
+"剪贴板中没有找到 iReal Pro 乐谱" = "No iReal Pro chart found in clipboard";
+"请先在 iReal Pro 中复制乐谱，再回到这里" = "Copy a chart in iReal Pro first, then return here";
+"✅ 解析成功" = "✅ Parsed Successfully";
+"首歌" = "songs";
+"歌单名称" = "Playlist Name";
+"小节" = "bars";
+"确认导入" = "Confirm Import";
+"导入乐谱" = "Import Chart";
+"取消" = "Cancel";
+"播放" = "Play";
+"停止" = "Stop";
+
+"Import Complete" = "Import Complete";
+"Successfully imported %d songs. %d songs with mixed time signatures are partially supported (shown in primary time signature)." = "Successfully imported %d songs. %d songs with mixed time signatures are partially supported (shown in primary time signature).";
+"Mixed" = "Mixed";
+
+"All songs already exist." = "All songs already exist.";
+"Successfully imported %d songs, skipped %d duplicates." = "Successfully imported %d songs, skipped %d duplicates.";
+"Successfully imported %d songs, skipped %d duplicates. %d songs with mixed time signatures are partially supported." = "Successfully imported %d songs, skipped %d duplicates. %d songs with mixed time signatures are partially supported.";
+
+// Sidebar — Delete
+"删除" = "Delete";
+"删除歌曲" = "Delete Song";
+"确定要删除「%@」吗？" = "Are you sure you want to delete \"%@\"?";
+
+// Sidebar — Import Menu
+"从文件导入" = "Import from File";
+"从链接导入" = "Import from Link";
+
+// File Import
+"正在导入…" = "Importing…";
+"无法读取文件，请确认文件编码为 UTF-8。" = "Cannot read file. Please ensure the file is UTF-8 encoded.";
+"文件中未找到有效的 iReal Pro 乐谱。" = "No valid iReal Pro charts found in the file.";
+
+// Default Playlist
+"My Songs" = "My Songs";
