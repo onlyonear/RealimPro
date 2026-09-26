@@ -27,7 +27,8 @@ I would like to ask for your permission to include your SoundFont in the app and
 Thank you for your work on Chorium.
 
 Best regards,
-RealimPro
+Shaohua Xu
+Developer, Real imPro
 onearonly@gmail.com
 
 ---
