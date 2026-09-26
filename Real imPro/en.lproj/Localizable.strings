@@ -19,6 +19,16 @@
 "⚙️ 即兴参数设置" = "Impro Parameters";
 "完成" = "Done";
 
+// Licenses
+"致谢" = "Acknowledgments";
+"致谢与开源许可" = "Acknowledgments & Licenses";
+"GNU 通用公共许可证 v2" = "GNU General Public License v2";
+"查看完整源代码（GitHub）" = "View complete source code (GitHub)";
+"VexFlow — MIT License" = "VexFlow — MIT License";
+"music21 — BSD 3-Clause License" = "music21 — BSD 3-Clause License";
+"音源 SoundFont" = "SoundFont";
+"联系方式" = "Contact";
+
 // Import
 "点下方按钮检测剪贴板" = "Tap to check clipboard";
 "导入的歌单" = "Imported Playlist";

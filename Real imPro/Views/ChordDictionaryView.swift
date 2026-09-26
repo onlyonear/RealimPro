@@ -10,6 +10,9 @@ struct ChordDictionaryView: View {
     /// 由外层 ContentView 绑定，用于「完成 / 左边缘向右滑」关闭
     @Binding var isPresented: Bool
 
+    // 「致谢与开源许可」弹窗（合规新增，不改动任何既有布局）
+    @State private var showLicenses = false
+
     // 半音(距根音) → 延伸音级数记号（色彩音使用 9/11/13 延伸体系）
     private static let colorDegreeName: [Int: String] = [
         0: "1", 1: "b9", 2: "9", 3: "#9", 4: "3", 5: "11",
@@ -193,6 +196,12 @@ struct ChordDictionaryView: View {
             .navigationTitle(NSLocalizedString("和弦音与色彩音", comment: ""))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                // 合规新增：左上角「致谢」按钮，弹窗展示开源许可页
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(NSLocalizedString("致谢", comment: "")) {
+                        showLicenses = true
+                    }
+                }
                 ToolbarItem(placement: .confirmationAction) {
                     Button(NSLocalizedString("完成", comment: "")) {
                         withAnimation(.easeInOut(duration: 0.22)) { isPresented = false }
@@ -207,6 +216,20 @@ struct ChordDictionaryView: View {
                 }
                 .frame(width: 22)
                 .allowsHitTesting(true)
+            }
+            // 合规新增：弹窗展示「致谢与开源许可」页
+            .sheet(isPresented: $showLicenses) {
+                NavigationStack {
+                    LicensesView()
+                        .toolbar {
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button(NSLocalizedString("完成", comment: "")) {
+                                    showLicenses = false
+                                }
+                                .fontWeight(.semibold)
+                            }
+                        }
+                }
             }
         }
     }
