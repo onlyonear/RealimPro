@@ -1,0 +1,48 @@
+Real imPro
+Copyright (C) 2026 RealimPro (contact: onearonly@gmail.com)
+
+This iPad application is a derivative work (a language port and
+re-implementation in Swift) of substantial portions of:
+
+    Impro-Visor ("Improvisation Advisor")
+    Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
+    Project page : https://www.cs.hmc.edu/~keller/jazz/improvisor/
+    Source code  : https://github.com/Impro-Visor/Impro-Visor
+
+Impro-Visor is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This derivative work elects the GNU General Public License Version 2
+(the new code in this repository is GPL-2.0-only). The complete
+corresponding source code is provided in this repository, with tags
+matching every build distributed on the App Store for which a source
+snapshot was retained (see README.md).
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details (see the file LICENSE).
+
+----------------------------------------------------------------------
+Additional third-party components used by this product:
+
+1. VexFlow (file: "Real imPro/vexflow-min.js")
+   Copyright (c) Mohit Muthanna Cheppudira and VexFlow contributors
+   License: MIT License
+   (full license text is shown in the in-app "Licenses" page)
+
+2. Chorium, custom revision (file: "Real imPro/MidiPlayer/ChoriumRevA.sf2")
+   SoundFont created and revised by openwrld (openwrld@kebi.com),
+   derived from the Chorium/ChoriumRevA SoundFont.
+   Redistribution terms: permission has been requested from the author;
+   see README.md. The embedded SoundFont metadata reads
+   "all rights reserved to the author(s)".
+
+3. The MusicXML repeat-expansion behavior in
+   "Real imPro/Importers/MusicXML/MusicXMLRepeater.swift" was
+   independently implemented following the approach used by music21:
+   Copyright (c) Michael Scott Cuthbert and the music21 Project
+   License: BSD 3-Clause License
+   (full license text is shown in the in-app "Licenses" page)
