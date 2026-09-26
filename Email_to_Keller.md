@@ -11,7 +11,7 @@
 
 Dear Professor Keller,
 
-I am writing about an iPad app I built, and to ask for your guidance on a licensing question. I am the sole developer and publisher of the app.
+I am writing to tell you about an iPad app I built and to ask for your guidance on a licensing question. I am the sole developer and publisher of the app.
 
 Real imPro is an iPad app for jazz practice. It ports substantial portions of Impro-Visor to Swift: roadmap/key analysis, guide-tone lines, full piano voicings, grammar- and theme-based solo generation, transform/substitution engines, and MIDI accompaniment. It is available on the App Store here:
 
@@ -25,7 +25,7 @@ The repository includes the GPL v2 text, a NOTICE file attributing Impro-Visor t
 
 The specific point I would like your view on is distribution through the App Store. I understand it is subject to Apple's standard terms and to FairPlay for installed copies, which may raise compatibility questions under GPL v2. I would therefore be grateful if you could confirm in writing that, to the extent you hold the relevant rights, you consent to this distribution and grant any additional permission or exception to the GPL that is necessary to permit distribution through the App Store under Apple's standard terms and FairPlay. A brief written confirmation would be sufficient.
 
-If you are not the appropriate person to grant this — for example, if Harvey Mudd College or other contributors also hold rights, or if HMC's Office of Technology Transfer should be contacted — I would appreciate your guidance on whom I should contact.
+If you are not the appropriate person to grant this — for example, if Harvey Mudd College or other contributors also hold rights, or if HMC's Office of Technology Transfer is the appropriate contact — I would appreciate your guidance on whom I should contact.
 
 I use the name "Impro-Visor" only to describe the origin of this port. If you would prefer different attribution or wording, I am glad to adjust it. If you would prefer a different arrangement overall, I am happy to discuss that as well.
 
