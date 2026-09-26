@@ -1,0 +1,125 @@
+/* English localization for Real imPro */
+
+// Toolbar
+"未选择歌曲" = "No Song Selected";
+"调号" = "Key";
+
+// Empty state
+"请从左侧选择一首歌曲" = "Select a song from the left";
+
+// Sidebar
+"搜索歌曲" = "Search Songs";
+"导入曲谱" = "Import Chart";
+
+// Settings
+"算法选择已移动至顶部工具栏" = "Algorithm selection moved to top toolbar";
+"音域范围" = "Note Range";
+"最低音 MIDI:" = "Lowest MIDI:";
+"最高音 MIDI:" = "Highest MIDI:";
+"⚙️ 即兴参数设置" = "Impro Parameters";
+"完成" = "Done";
+
+// Import
+"点下方按钮检测剪贴板" = "Tap to check clipboard";
+"导入的歌单" = "Imported Playlist";
+"正在检测剪贴板..." = "Checking clipboard...";
+"剪贴板中没有找到 iReal Pro 乐谱" = "No iReal Pro chart found in clipboard";
+"请先在 iReal Pro 中复制乐谱，再回到这里" = "Copy a chart in iReal Pro first, then return here";
+"✅ 解析成功" = "✅ Parsed Successfully";
+"首歌" = "songs";
+"歌单名称" = "Playlist Name";
+"小节" = "bars";
+"确认导入" = "Confirm Import";
+"导入乐谱" = "Import Chart";
+"取消" = "Cancel";
+"播放" = "Play";
+"停止" = "Stop";
+
+"Import Complete" = "Import Complete";
+"Successfully imported %d songs. %d songs with mixed time signatures are partially supported (shown in primary time signature)." = "Successfully imported %d songs. %d songs with mixed time signatures are partially supported (shown in primary time signature).";
+"Mixed" = "Mixed";
+
+"All songs already exist." = "All songs already exist.";
+"Successfully imported %d songs, skipped %d duplicates." = "Successfully imported %d songs, skipped %d duplicates.";
+"Successfully imported %d songs, skipped %d duplicates. %d songs with mixed time signatures are partially supported." = "Successfully imported %d songs, skipped %d duplicates. %d songs with mixed time signatures are partially supported.";
+
+// Sidebar — Delete
+"删除" = "Delete";
+"删除歌曲" = "Delete Song";
+"确定要删除「%@」吗？" = "Are you sure you want to delete \"%@\"?";
+
+// Sidebar — Import Menu
+"从文件导入" = "Import from File";
+"从链接导入" = "Import from Link";
+
+// File Import
+"正在导入…" = "Importing…";
+"无法读取文件，请确认文件编码为 UTF-8。" = "Cannot read file. Please ensure the file is UTF-8 encoded.";
+"文件中未找到有效的 iReal Pro 乐谱。" = "No valid iReal Pro charts found in the file.";
+
+// Default Playlist
+"My Songs" = "My Songs";
+
+// Chord Dictionary (和弦音/色彩音字典页表头)
+"和弦音与色彩音" = "Chord & Color Tones";
+"和弦" = "Chord";
+"和弦音" = "Chord Tones";
+"保守色彩音" = "Conservative Color";
+"扩展色彩音" = "Extended Color";
+"推荐音阶" = "Recommend Scale";
+"核心三和弦与七和弦" = "Core Triads & Sevenths";
+"属七变化音" = "Altered Dominants";
+"挂留和弦" = "Suspended";
+"小调色彩" = "Minor Colors";
+"减 · 增 · 变化" = "Diminished · Augmented · Alt";
+"本页音级由分析引擎实时计算，与 Solo 生成、音符着色所用音集完全一致。" = "Degrees here are computed live from the analysis engine — identical to the tone sets used for solo generation and note coloring.";
+"Conservative：更克制的色彩音；Extended：对齐原版的完整色彩音池（只增不减）。" = "Conservative: a tighter set of color tones. Extended: the full original color-tone pool (superset of Conservative).";
+
+/* M5 ThemeWeaver Develop 主题发展 */
+"主题发展" = "Develop";
+"编辑动机" = "Edit Motif";
+"换一个" = "Regenerate";
+"点音符录入" = "Tap Notes";
+"粘贴音符" = "Paste Notes";
+"解析并填入" = "Parse & Add";
+"撤销" = "Undo";
+"清空" = "Clear";
+"完成" = "Done";
+"时值" = "Duration";
+"附点" = "Dotted";
+"三连音" = "Triplet";
+"休止" = "Rest";
+"缺少时值" = "missing duration";
+"无法识别的时值" = "unrecognized duration";
+"无法识别的音名" = "unrecognized note name";
+"音高超出 %d–%d" = "pitch out of range %d–%d";
+"已录 %d 音 · %d slots" = "%d notes · %d slots";
+"动机长度 %d / 小节 %d slots" = "Motif %d / measure %d slots";
+
+// Guide Tone line presets (group name "Guide" is a fixed English short label like Basic/Master, not localized)
+"平滑·每和弦两拍" = "Smooth";
+"上行·每和弦两拍" = "Rising";
+"下行·每和弦两拍" = "Falling";
+"密集·每拍换音" = "Busy";
+
+// [Hunk10] Mixer Transform embellishment toggle (user-visible label; no implementation name)
+"变换加花" = "Transform";
+
+// [方案21 20260915] Original⇄Solo 对照胶囊（原 melody 组专属提示文案已随 Melody 组下线删除）
+"原旋律" = "Original";
+"即兴" = "Solo";
+
+// [20260916] 侧栏播放列表删除/废纸篓（补齐此前漏翻，英文环境不再回退显示中文 key）
+"删除列表" = "Delete Playlist";
+"隐藏列表" = "Hide Playlist";
+"恢复经典爵士" = "Restore Classic Jazz";
+"恢复" = "Restore";
+"永久删除" = "Delete Forever";
+"废纸篓" = "Trash";
+"将「%@」移入废纸篓？" = "Move \"%@\" to Trash?";
+"确定要隐藏整个「%@」列表吗？可在下方菜单恢复。" = "Hide the entire \"%@\" playlist? You can restore it later from the menu below.";
+"确定删除整个「%@」歌单及其全部歌曲吗？此操作不可恢复。" = "Permanently delete the \"%@\" playlist and all of its songs? This cannot be undone.";
+"确定清空 My Songs 中除 Demo 外的全部歌曲吗？这些歌曲会移入废纸篓，可随时恢复。" = "Remove every song except Demo from My Songs? They will be moved to Trash and can be restored later.";
+"确定永久删除「%@」吗？此操作不可恢复。" = "Permanently delete \"%@\"? This cannot be undone.";
+"确定清空废纸篓吗？其中所有歌曲将被永久删除，此操作不可恢复。" = "Empty the Trash? All songs in it will be permanently deleted and cannot be recovered.";
+"您想将它恢复到初始播放列表吗？" = "Restore it to its original playlist?";

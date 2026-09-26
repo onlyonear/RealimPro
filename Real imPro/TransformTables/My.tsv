@@ -1,0 +1,67 @@
+SUB	mordant	embellishment	1	true
+TR	one-step-two-notes-uneven	1	true	n1 n2	(and (= 1 (pitch- n1 n2)) (not (triplet? n1)) (duration>= n1 4) (duration>= n2 8))	(subtract-duration 8 n1)	(set-duration 16 (transpose-diatonic 2 n1) (transpose-chromatic -1/2 n2))	n2
+TR	one-step-two-notes-even	1	true	n1 n2	(and (= 1 (pitch- n1 n2)) (not (triplet? n1)) (duration>= n1 4) (duration>= n2 8))	(subtract-duration 8/3 n1)	(set-duration 16/3 (transpose-diatonic 2 n1) n1)	n2
+TR	one-step-three-notes-just-above	4	true	n1 n2	(and (= 1 (pitch- n1 n2)) (not (triplet? n1)) (duration>= n1 4) (duration>= n2 8))	(subtract-duration 8+16 n1)	(set-duration 16 (transpose-chromatic 1/2 n1) n1 (transpose-chromatic -1/2 n1))	n2
+TR	two-step-three-notes-just-above	4	true	n1 n2	(and (= 2 (pitch- n1 n2)) (not (triplet? n1)) (not (= (chord-family n1) dominant)) (duration>= (duration n1) 4) (duration>= (duration n2) 8))	(subtract-duration 8+16 n1)	(set-duration 16 (transpose-diatonic 2 n1) n1 (transpose-diatonic 2 n2))	n2
+TR	two-step-three-notes-above-below	4	true	n1 n2	(and (= 1 (pitch- n1 n2)) (not (triplet? n1)) (not (= (chord-family n1) dominant)) (duration>= n1 4) (duration>= n2 8))	(subtract-duration 8+16 n1)	(set-duration 16 (transpose-diatonic 2 n1) n1 (transpose-chromatic -1/2 n2))	n2
+SUB	triplet-arpeggio	motif	4	true
+TR	ascending	1	true	n1 n2 n3	(and (member (relative-pitch n2) (1 3 5)) (duration= n2 4) (pitch< n2 n3) (not (= (chord-family n2) dominant)))	(subtract-duration 8 n1)	(set-duration 8 (transpose-diatonic -2 n2))	(scale-duration 1/3 n2 (transpose-diatonic 3 n2) (transpose-diatonic 5 n2))	n3
+TR	descending	1	true	n1 n2 n3	(and (member (relative-pitch n2) (1 3 5)) (duration= n2 4) (pitch> n3 n2) (not (= (chord-family n2) dominant)))	(subtract-duration 8 n1)	(set-duration 8 (transpose-diatonic -1 n2))	(scale-duration 1/3 (transpose-diatonic 5 n2) (transpose-diatonic 3 n2) (transpose-diatonic 1 n2))	n3
+SUB	gracenote	embellishment	1	true
+TR	single-ascending-tuple	6	true	n1 n2	(and (not (triplet? n1)) (= (note-category n2) C) (duration>= n1 4) (not (= (absolute-pitch (transpose-chromatic -1/2 n2)) (absolute-pitch n1))) (not (and (rest? n1) (duration= n1 8))) (duration>= n2 8))	(subtract-duration 16 n1)	(set-duration 16 (transpose-chromatic -1/2 n2))	n2
+TR	single-descending-tuple	6	true	n1 n2	(and (= (note-category n2) C) (not (triplet? n1)) (duration>= n1 4) (not (= (absolute-pitch (transpose-chromatic 1/2 n2)) (absolute-pitch n1))) (not (and (rest? n1) (duration= n1 8))) (duration>= n2 8))	(subtract-duration 16 n1)	(set-duration 16 (transpose-chromatic 1/2 n2))	n2
+TR	double-ascending	3	true	n1 n2	(and (= (note-category n2) C) (not (triplet? n1)) (duration>= n1 8) (duration>= n2 8))	(subtract-duration 8 n1)	(set-duration 16 (transpose-chromatic -1 n2) (transpose-chromatic -1/2 n2))	n2
+TR	double-descending	3	true	n1 n2	(and (= (note-category n2) C) (not (triplet? n1)) (duration>= n1 8) (duration>= n2 8))	(subtract-duration 8 n1)	(set-duration 16 (transpose-chromatic 1 n2) (transpose-chromatic 1/2 n2))	n2
+TR	triple-ascending	1	true	n1 n2	(and (= (note-category n2) C) (not (triplet? n1)) (duration>= n1 8) (duration>= n2 8))	(subtract-duration 8 n1)	(set-duration 16/3 (transpose-chromatic -3/2 n2) (transpose-chromatic -1 n2) (transpose-chromatic -1/2 n2))	n2
+TR	triple-descending	1	true	n1 n2	(and (= (note-category n2) C) (not (triplet? n1)) (duration>= n1 8) (duration>= n2 8))	(subtract-duration 8 n1)	(set-duration 16/3 (transpose-chromatic 3/2 n2) (transpose-chromatic 1 n2) (transpose-chromatic 1/2 n2))	n2
+SUB	identity-motif	motif	1	true
+TR	do-nothing	1	true	n1	(= n1 n1)	n1
+SUB	identity-embellishment	embellishment	10	true
+TR	do-nothing	1	true	n1	(= n1 n1)	n1
+SUB	passing-tone	motif	5	true
+TR	chromatic-down	1	false	n1 n2	(and (= (note-category n2) C) (= (pitch- n1 n2) 1) (duration>= n1 4))	(scale-duration 1/2 n1 (transpose-chromatic -1/2 n1))	n2
+TR	chromatic-up	1	false	n1 n2	(and (= (note-category n2) C) (= (pitch- n2 n1) 1) (duration>= n1 4))	(scale-duration 1/2 n1 (transpose-chromatic 1/2 n1))	n2
+TR	repeat-note-up	1	false	n1 n2 n3	(and (= (note-category n1) C) (= (pitch- (relative-pitch n3) n1) 3) (duration>= n1 4) (duration= n2 4))	n1	(scale-duration 1/2 (set-duration (duration n2) n1 (transpose-diatonic 2 n1)))	n3
+TR	chromatic-up-wide	1	true	n1 n2	(and (> (pitch- n2 n1) 1) (duration>= n1 4))	(scale-duration 1/4 n1 (transpose-chromatic 1/2 n1) (transpose-chromatic 1 n1) (transpose-chromatic 3/2 n1))	n2
+TR	chromatic-down-wide	1	true	n1 n2	(and (> (pitch- n1 n2) 1) (duration>= n1 4))	(scale-duration 1/4 n1 (transpose-chromatic -1/2 n1) (transpose-chromatic -1 n1) (transpose-chromatic -3/2 n1))	n2
+SUB	split-half	motif	1	true
+TR	triplets-up	2	true	n1	(and (not (= (chord-family n1) dominant)) (duration= n1 2))	(scale-duration 1/3 n1 (transpose-diatonic 2 n1) (transpose-diatonic 3 n1))
+TR	triplets-up-1-2-4	2	true	n1 n2	(and (duration= n1 2) (not (= (chord-family n1) dominant)) (pitch<= n1 n2))	(scale-duration 1/3 n1 (transpose-diatonic 2 n1) (transpose-diatonic 4 n1))
+TR	triplets-down	1	true	n1	(and (not (= (chord-family n1) dominant)) (duration= n1 2))	(scale-duration 1/3 n1 (transpose-diatonic -1 n1) (transpose-diatonic -2 n1))
+TR	quad-eights-up-1-2-3-5	3	true	n1	(duration= n1 2)	(scale-duration 1/4 n1 (transpose-diatonic 2 n1) (transpose-diatonic 3 n1) (transpose-diatonic 5 n1))
+TR	quad-eights-down-8-7-6-5	3	true	n1	(duration= n1 2)	(scale-duration 1/4 n1 (transpose-diatonic -1 n1) (transpose-diatonic -2 n1) (transpose-diatonic -3 n1))
+TR	quad-eights-5-6-3-2	3	true	n1	(duration= n1 2)	(scale-duration 1/4 n1 (transpose-diatonic 1 n1) (transpose-diatonic -2 n1) (transpose-diatonic -3 n1))
+TR	quad-eights-5-3-6-b6	3	true	n1	(duration= n1 2)	(scale-duration 1/4 n1 (transpose-diatonic -3 n1) (transpose-diatonic 1 n1) (transpose-chromatic 1 n1))
+TR	quad-enclosure-1-2-7-1	2	true	n1 n2	(and (duration= n1 2) (duration< n1 1))	(scale-duration 1/4 n1 (transpose-diatonic 1 n1) (transpose-chromatic -1/2 n1) n1)	n2
+TR	oct-enclosure	2	true	n1 n2	(and (duration= n1 1) (< (pitch- n2 n1) 5))	(scale-duration 1/8 n1 (transpose-chromatic 1/2 n1) (transpose-chromatic 1 n1) (transpose-chromatic -1/2 n1) n1 (transpose-chromatic 1 n1) (transpose-chromatic 1/2 n1) n1)	n2
+SUB	split-quarter	embellishment	4	true
+TR	eighths-up	3	true	n1	(duration= n1 4)	(scale-duration 1/2 n1 (transpose-diatonic 2 n1))
+TR	eighths-up-3rd	3	true	n1	(and (not (= (chord-family n1) dominant)) (duration= n1 4))	(scale-duration 1/2 n1 (transpose-diatonic 3 n1))
+TR	eighths-down	3	true	n1	(duration= n1 4)	(scale-duration 1/2 n1 (transpose-diatonic -1 n1))
+TR	triplets-up	1	true	n1	(and (not (= (chord-family n1) dominant)) (duration= n1 4))	(scale-duration 1/3 n1 (transpose-diatonic 2 n1) (transpose-diatonic 3 n1))
+TR	triplets-up-1-2-4	1	true	n1 n2	(and (duration= n1 4) (not (= (chord-family n1) dominant)) (pitch<= n1 n2))	(scale-duration 1/3 n1 (transpose-diatonic 2 n1) (transpose-diatonic 4 n1))
+TR	triplets-down	1	true	n1	(and (not (= (chord-family n1) dominant)) (duration= n1 4))	(scale-duration 1/3 n1 (transpose-diatonic -1 n1) (transpose-diatonic -2 n1))
+SUB	triplet-embellish	embellishment	4	true
+TR	below-trill-from-small-note	2	true	n1 n2 n3	(and (duration= n2 4) (member (note-category n1) (C L H)) (not (= (chord-family n1) dominant)) (not (rest? n1)) (not (rest? n3)) (< (abs (pitch- n1 n3)) 2) (not (= (absolute-pitch (transpose-diatonic -1 n1)) (absolute-pitch n3))))	n1	(set-duration 8/3 (transpose-diatonic -1 n1) n1 (transpose-diatonic -1 n1))	n3
+TR	below-down-from-small-note	2	true	n1 n2 n3	(and (duration= n2 4) (not (= (chord-family n1) dominant)) (member (note-category n1) (C L H)) (not (rest? n1)) (not (rest? n3)) (< (abs (pitch- n1 n3)) 2) (not (= (absolute-pitch (transpose-diatonic -1 n3)) (absolute-pitch (transpose-diatonic -1 n1)))) (not (= (absolute-pitch n3) (absolute-pitch (transpose-diatonic -1 n1)))))	n1	(set-duration 8/3 (transpose-diatonic -1 n1) (transpose-diatonic -1 n3) (transpose-diatonic -1 n1))	n3
+TR	below-up-from-small-note	2	true	n1 n2 n3	(and (duration= n2 4) (not (= (chord-family n1) dominant)) (not (rest? n1)) (not (rest? n2)) (not (rest? n3)) (member (note-category n1) (C L H)) (< (abs (pitch- n1 n3)) 3/2) (not (= (absolute-pitch (transpose-diatonic 2 n3)) (absolute-pitch (transpose-diatonic -1 n1)))) (not (= (absolute-pitch n3) (absolute-pitch (transpose-diatonic -1 n1)))))	n1	(set-duration 8/3 (transpose-diatonic -1 n1) (transpose-diatonic 2 n3) (transpose-diatonic -1 n1))	n3
+SUB	neighbors	embellishment	1	true
+TR	double-neighbor	1	true	n1 n2	(and (duration= n1 4) (duration= n2 4) (chord= n1 n2) (= (note-category n1) C) (not (= (chord-family n1) dominant)))	(scale-duration 1/2 n1 (transpose-diatonic 2 n1) (transpose-chromatic -1/2 n1) n1)
+TR	chrom-emb-major-1	1	true	n1 n2 n3	(and (member (chord-family n3) (major major7)) (member (relative-pitch n3) (1 2 4 5 6 8 9 11 12)) (chord= n2 n3) (duration= n2 4) (duration>= n1 8))	(subtract-duration 8 n1)	(set-duration 8 (transpose-chromatic 1 n3) (transpose-chromatic 1/2 n3) (transpose-chromatic -1/2 n3))	n3
+TR	chrom-emb-major-2	1	true	n1 n2 n3	(and (member (chord-family n3) (major major7)) (member (relative-pitch n3) (-1 3 7 10)) (chord= n2 n3) (duration= n2 4) (duration>= n1 8))	(subtract-duration 8 n1)	(set-duration 8 (transpose-chromatic 1 n3) (transpose-chromatic -1 n3) (transpose-chromatic -1/2 n3))	n3
+TR	chrom-emb-minor-1	1	true	n1 n2 n3	(and (member (chord-family n3) (minor minor7)) (member (relative-pitch n3) (1 3 4 6 8 10 11 13)) (chord= n2 n3) (duration= n2 4) (duration>= n1 8))	(subtract-duration 8 n1)	(set-duration 8 (transpose-chromatic 1 n3) (transpose-chromatic 1/2 n3) (transpose-chromatic -1/2 n3))	n3
+TR	chrom-emb-minor-2	1	true	n1 n2 n3	(and (member (chord-family n3) (minor minor7)) (member (relative-pitch n3) (-1 2 5 7 9 12)) (chord= n2 n3) (duration= n2 4) (duration>= n1 8))	(subtract-duration 8 n1)	(set-duration 8 (transpose-chromatic 1/2 n3) (transpose-chromatic -1 n3) (transpose-chromatic -1/2 n3))	n3
+SUB	add-rests	embellishment	1	true
+TR	cut-half	5	true	n1	(duration= n1 4)	(scale-duration 1/2 (make-rest n1) n1)
+TR	turn-to-rest	9	true	n1	(duration= n1 4)	(make-rest n1)
+SUB	split-whole	motif	5	true
+TR	divide-whole-up-1-3	2	true	n1 n2	(and (duration= n1 1) (< (pitch- n2 n1) 4))	(scale-duration 1/4 n1)	(scale-duration 3/4 (transpose-diatonic 1 n1))	n2
+TR	divide-whole-up-1-2-1	2	true	n1 n2	(and (duration= n1 1) (< (pitch- n2 n1) 4))	(scale-duration 1/4 n1)	(scale-duration 2/4 (transpose-diatonic 1 n1))	(scale-duration 1/4 n1)	n2
+TR	divide-whole-down-1-3	2	true	n1 n2	(and (duration= n1 1) (< (pitch- n2 n1) 4))	(scale-duration 3/4 (transpose-diatonic 1 n1))	(scale-duration 1/4 n1)	n2
+TR	divide-whole-down-1-2-1	2	true	n1 n2	(and (duration= n1 1) (< (pitch- n2 n1) 4))	(scale-duration 1/4 n1)	(scale-duration 2/4 (transpose-diatonic -1 n1))	(scale-duration 1/4 n1)	n2
+TR	two-equal-notes-a	2	true	n1 n2	(and (duration= n1 n2) (member (duration n1) (list 1 2)))	(scale-duration 1/4 (transpose-diatonic 0 n1) (transpose-diatonic 3 n1) (transpose-diatonic 5 n1) (transpose-diatonic 7 n1) (transpose-diatonic 8 n2) (transpose-diatonic 7 n2) (transpose-diatonic 5 n2) (transpose-diatonic 3 n2))
+TR	two-equal-notes-b	2	true	n1 n2	(and (duration= n1 n2) (member (duration n1) (list 1 2)))	(scale-duration 1/4 (transpose-diatonic 3 n1) (transpose-diatonic 0 n1) (transpose-diatonic 5 n1) (transpose-diatonic 7 n1) (transpose-diatonic 8 n2) (transpose-diatonic 5 n2) (transpose-diatonic 7 n2) (transpose-diatonic 3 n2))
+TR	two-equal-notes-c	3	true	n1 n2	(and (duration= n1 n2) (member (duration n1) (list 1 2)))	(scale-duration 1/4 (transpose-diatonic 5 n1) (transpose-diatonic 7 n1) (transpose-diatonic 3 n1) (transpose-diatonic 0 n1) (transpose-diatonic 7 n2) (transpose-diatonic 8 n2) (transpose-diatonic 5 n2) (transpose-diatonic 3 n2))
+TR	two-equal-notes-d	3	true	n1 n2	(and (duration= n1 n2) (member (duration n1) (list 1 2)))	(scale-duration 1/4 (transpose-diatonic 7 n1) (transpose-diatonic 5 n1) (transpose-diatonic 3 n1) (transpose-diatonic 0 n1) (transpose-diatonic 3 n2) (transpose-diatonic 5 n2) (transpose-diatonic 7 n2) (transpose-diatonic 8 n2))
+TR	two-equal-notes-e	3	true	n1 n2	(and (duration= n1 n2) (member (duration n1) (list 1 2)))	(scale-duration 1/4 (transpose-diatonic 7 n1) (scale-duration 2 (transpose-diatonic 5 n1)) (transpose-diatonic 0 n1) (transpose-diatonic 3 n2) (transpose-diatonic 5 n2) (transpose-diatonic 7 n2) (transpose-diatonic 8 n2))
+TR	two-equal-notes-f	3	true	n1 n2	(and (duration= n1 n2) (member (duration n1) (list 1 2)))	(scale-duration 1/4 (transpose-diatonic 3 n1) (transpose-diatonic 0 n1) (transpose-diatonic 5 n1) (transpose-diatonic 7 n1) (transpose-diatonic 8 n2) (scale-duration 2 (transpose-diatonic 5 n2)) (transpose-diatonic 3 n2))
