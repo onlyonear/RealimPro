@@ -11,7 +11,7 @@ import SwiftUI
 struct LicensesView: View {
 
     // 仓库公开后替换为实际 URL（与 README、App Store 文案保持一致）
-    private let sourceRepositoryURL = URL(string: "https://github.com/[YOUR-GITHUB-USERNAME]/RealimPro")!
+    private let sourceRepositoryURL = URL(string: "https://github.com/onlyonear/RealimPro")!
     private let contactURL = URL(string: "mailto:onearonly@gmail.com")!
 
     var body: some View {

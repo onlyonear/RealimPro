@@ -1,7 +1,7 @@
 # App Store 描述更新文案
 
 用途：提交合规版本（建议版本号 1.07）时更新 App Store 元数据。
-所有 `[REPO URL]` 在 GitHub 仓库公开后替换为实际地址。
+所有 `https://github.com/onlyonear/RealimPro` 在 GitHub 仓库公开后替换为实际地址。
 
 ---
 
@@ -12,7 +12,7 @@ OPEN SOURCE & LICENSES
 
 Real imPro contains a Swift port of substantial portions of Impro-Visor ("Improvisation Advisor") by Prof. Robert Keller and Harvey Mudd College, used under the GNU General Public License v2. The complete corresponding source code is published at:
 
-[REPO URL]
+https://github.com/onlyonear/RealimPro
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License v2 for details.
 
@@ -26,7 +26,7 @@ Real imPro also uses VexFlow (MIT License) and follows an approach from music21 
 
 Real imPro 包含对 Impro-Visor（"Improvisation Advisor"，作者 Robert Keller 教授与 Harvey Mudd College）大量代码的 Swift 移植，基于 GNU 通用公共许可证 v2（GPL v2）使用。完整对应源代码已公开发布于：
 
-[REPO URL]
+https://github.com/onlyonear/RealimPro
 
 本程序按"现状"分发，不提供任何明示或默示的担保（包括适销性与特定用途适用性）。详见 GPL v2。
 
@@ -53,7 +53,7 @@ Real imPro 包含对 Impro-Visor（"Improvisation Advisor"，作者 Robert Kelle
 
 - **License（许可证）字段**：不要继续使用标准苹果 EULA 的"无特殊许可"状态而不加说明。做法二选一：
   1. 保持 Standard EULA，并在描述中加入上述 GPL 声明（多数 GPL iOS 应用的实际做法）；
-  2. 在 License 字段填入自定义 EULA 文本，其中写明"本软件包含 GPL v2 代码，源代码见 [REPO URL]，GPL 赋予用户的源代码获取与再分发权利不受 EULA 限制"。
+  2. 在 License 字段填入自定义 EULA 文本，其中写明"本软件包含 GPL v2 代码，源代码见 https://github.com/onlyonear/RealimPro，GPL 赋予用户的源代码获取与再分发权利不受 EULA 限制"。
   → 建议先用做法 1，配合 App 内许可页与仓库；若 Keller 对苹果条款有异议，再按做法 2 或调整。
 - **Support URL（支持网址）**：可直接用公开仓库地址（GitHub 仓库页面可作为支持页）。
 - **销售区域**：若暂不处理欧盟个别曲目（Beyond the Blue Horizon，Harling 卒于 1958，EU 保护期至 2028 年），可暂时取消欧盟区域销售，或在下一版本移除该曲；美国区域无版权问题。

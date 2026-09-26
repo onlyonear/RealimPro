@@ -3,7 +3,7 @@
 发送账户：onearonly@gmail.com
 收件人：keller@cs.hmc.edu
 建议时机：仓库已建好、内容定稿后即可发送（仓库可先保持公开只读，或在邮件中说明"将于本周公开"）。
-占位符：[APP STORE URL]、[REPO URL] 发送前替换。
+占位符：[APP STORE URL]、https://github.com/onlyonear/RealimPro 发送前替换。
 
 ---
 
@@ -21,7 +21,7 @@ Real imPro is an iPad app for jazz practice that ports substantial portions of I
 
 When I published it, I did not handle the GPL obligations correctly: I did not release the corresponding source code or include the license notices in the app. I have now corrected that. The complete corresponding source code, including tags matching the released builds, is published at:
 
-[REPO URL]
+https://github.com/onlyonear/RealimPro
 
 The repository carries the GPL v2 text, a NOTICE file attributing Impro-Visor to you and Harvey Mudd College, and a file-by-file provenance document. The app also includes an "Acknowledgments & Licenses" screen with the same attribution and a link to the source. The app is a paid app; as you know, the GPL permits charging for copies, and the source is freely available to every recipient.
 
@@ -41,7 +41,7 @@ onearonly@gmail.com
 
 Dear Prof. Keller,
 
-A gentle follow-up to my message below about Real imPro, the iOS port of Impro-Visor. The source remains available at [REPO URL], with full GPL v2 attribution. I would appreciate any confirmation that the App Store distribution is acceptable to you, or any changes you would like.
+A gentle follow-up to my message below about Real imPro, the iOS port of Impro-Visor. The source remains available at https://github.com/onlyonear/RealimPro, with full GPL v2 attribution. I would appreciate any confirmation that the App Store distribution is acceptable to you, or any changes you would like.
 
 Best regards,
 RealimPro
