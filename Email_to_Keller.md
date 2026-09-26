@@ -3,7 +3,7 @@
 发送账户：onearonly@gmail.com
 收件人：keller@cs.hmc.edu
 建议时机：仓库已建好、内容定稿后即可发送（仓库可先保持公开只读，或在邮件中说明"将于本周公开"）。
-占位符：[APP STORE URL]、https://github.com/onlyonear/RealimPro 发送前替换。
+占位符：https://apps.apple.com/cn/app/real-impro/id6797129785、https://github.com/onlyonear/RealimPro 发送前替换。
 
 ---
 
@@ -17,13 +17,13 @@ I am writing to let you know about an iPad application I built, and to ask a lic
 
 Real imPro is an iPad app for jazz practice that ports substantial portions of Impro-Visor to Swift: the roadmap/key analysis, guide-tone lines, full piano voicings, grammar- and theme-based solo generation, the transform/substitution engines, and MIDI accompaniment. It is available on the App Store here:
 
-[APP STORE URL]
+https://apps.apple.com/cn/app/real-impro/id6797129785
 
 When I published it, I did not handle the GPL obligations correctly: I did not release the corresponding source code or include the license notices in the app. I have now corrected that. The complete corresponding source code, including tags matching the released builds, is published at:
 
 https://github.com/onlyonear/RealimPro
 
-The repository carries the GPL v2 text, a NOTICE file attributing Impro-Visor to you and Harvey Mudd College, and a file-by-file provenance document. The app also includes an "Acknowledgments & Licenses" screen with the same attribution and a link to the source. The app is a paid app; as you know, the GPL permits charging for copies, and the source is freely available to every recipient.
+The repository carries the GPL v2 text, a NOTICE file attributing Impro-Visor to you and Harvey Mudd College, and a file-by-file provenance document. The app also includes an "Acknowledgments & Licenses" screen with the same attribution and a link to the source. The app itself is free to download, with an optional one-time in-app purchase for the advanced algorithms. As you know, the GPL permits charging for copies; either way, the complete source is freely available to everyone.
 
 One point I would like your view on: distribution through the App Store is subject to Apple's standard terms and to FairPlay for installed copies. I would be grateful if you could confirm in writing that you have no objection to this particular form of distribution, or let me know if there is anything further you would like me to do. If you would prefer a different arrangement, I am glad to discuss it.
 

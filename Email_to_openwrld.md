@@ -4,7 +4,7 @@
 收件人：openwrld@kebi.com
 背景：App 内打包的 ChoriumRevA.sf2 经核验是 openwrld 2023-05-21 的 "Chorium Custom Revision"，
 内嵌 ICOP = "all rights reserved to the author(s)"。公开 GPL 仓库（包含再分发权）前需要作者许可。
-占位符：[APP STORE URL]、https://github.com/onlyonear/RealimPro 发送前替换。
+占位符：https://apps.apple.com/cn/app/real-impro/id6797129785、https://github.com/onlyonear/RealimPro 发送前替换。
 
 ---
 
@@ -16,7 +16,7 @@ Hello,
 
 I am developing an iPad app for jazz practice called Real imPro, which uses your custom revision of the Chorium SoundFont (the file is dated 21 May 2023 and credits openwrld@kebi.com). The app is available here:
 
-[APP STORE URL]
+https://apps.apple.com/cn/app/real-impro/id6797129785
 
 I am in the process of releasing the app's source code under the GNU GPL v2, which requires that recipients be able to redistribute everything included with it. The source repository is:
 
