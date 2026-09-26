@@ -11,7 +11,7 @@
 
 Dear Professor Keller,
 
-I am writing about an iPad app I built, and to ask for your guidance on a licensing question.
+I am writing about an iPad app I built, and to ask for your guidance on a licensing question. I am the sole developer and publisher of the app.
 
 Real imPro is an iPad app for jazz practice. It ports substantial portions of Impro-Visor to Swift: roadmap/key analysis, guide-tone lines, full piano voicings, grammar- and theme-based solo generation, transform/substitution engines, and MIDI accompaniment. It is available on the App Store here:
 
@@ -23,9 +23,9 @@ https://github.com/onlyonear/RealimPro
 
 The repository includes the GPL v2 text, a NOTICE file attributing Impro-Visor to you and Harvey Mudd College, and a file-by-file provenance document. The app also includes an "Acknowledgments & Licenses" screen with the same attribution and a link to the source. The app is free to download, with an optional one-time in-app purchase; the complete source is freely available to everyone.
 
-The specific point I would like your view on is distribution through the App Store. I understand it is subject to Apple's standard terms and to FairPlay for installed copies, which are arguably incompatible with GPL v2. I would therefore be grateful if you could confirm in writing that, as a copyright holder, you consent to this distribution and grant any necessary exception under Apple's terms and FairPlay. A brief written confirmation would be sufficient.
+The specific point I would like your view on is distribution through the App Store. I understand it is subject to Apple's standard terms and to FairPlay for installed copies, which may raise compatibility questions under GPL v2. I would therefore be grateful if you could confirm in writing that, to the extent you hold the relevant rights, you consent to this distribution and grant any additional permission or exception to the GPL that is necessary to permit distribution through the App Store under Apple's standard terms and FairPlay. A brief written confirmation would be sufficient.
 
-If you are not the appropriate person to grant this — for example if Harvey Mudd College or other contributors also hold rights — I would appreciate your guidance on whom I should contact.
+If you are not the appropriate person to grant this — for example, if Harvey Mudd College or other contributors also hold rights, or if HMC's Office of Technology Transfer should be contacted — I would appreciate your guidance on whom I should contact.
 
 I use the name "Impro-Visor" only to describe the origin of this port. If you would prefer different attribution or wording, I am glad to adjust it. If you would prefer a different arrangement overall, I am happy to discuss that as well.
 
@@ -33,7 +33,7 @@ Thank you for creating and maintaining Impro-Visor.
 
 Best regards,
 Shaohua Xu
-Developer, Real imPro
+Sole Developer, Real imPro
 onearonly@gmail.com
 
 ---
@@ -52,7 +52,7 @@ A gentle follow-up to my message below about Real imPro, the iOS port of Impro-V
 
 Best regards,
 Shaohua Xu
-Developer, Real imPro
+Sole Developer, Real imPro
 onearonly@gmail.com
 
 ## 回复处理
