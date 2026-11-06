@@ -1,0 +1,7 @@
+MidiPlayer/JazzMidiPlayer.swift:3:8: error: no such module 'UIKit'
+  1 | import Foundation
+  2 | import AVFAudio
+  3 | import UIKit
+    |        `- error: no such module 'UIKit'
+  4 | 
+  5 | // MARK: - 智能 Swing MIDI 播放管理器 (支持 16分、三连音与非线性律动)

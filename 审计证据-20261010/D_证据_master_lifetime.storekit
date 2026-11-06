@@ -1,0 +1,28 @@
+{
+  "bundleID" : "wonderbread.realimpro",
+  "profile" : {
+    "products" : [
+      {
+        "id" : "com.realimpro.master.lifetime",
+        "kind" : "NonConsumable",
+        "referenceName" : "Master Algorithms Lifetime",
+        "displayPrice" : 49.99,
+        "description" : {
+          "en" : "Advanced jazz grammar engine. Lifetime access, one-time purchase."
+        },
+        "displayName" : {
+          "en" : "Unlock Master Algorithms"
+        }
+      }
+    ],
+    "productsByTag" : {},
+    "pricingOverrides" : [],
+    "version" : {
+      "major" : 1,
+      "minor" : 0,
+      "patch" : 7
+    }
+  },
+  "storeConfigurationID" : "realimpro-local-test",
+  "storeConfigurationVersion" : 2
+}

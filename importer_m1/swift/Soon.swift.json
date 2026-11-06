@@ -1,0 +1,1530 @@
+{
+  "diag" : {
+    "barCount" : 32,
+    "expandedBars" : 32,
+    "hasRepeat" : false,
+    "nonConserved" : [
+
+    ],
+    "noteDurMismatch" : [
+
+    ],
+    "orphanRepaired" : 0,
+    "rawBars" : 32,
+    "repeatMap" : [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "tieFixed" : 1
+  },
+  "file" : "Soon.xml",
+  "missKinds" : {
+
+  },
+  "resolveMiss" : 0,
+  "resolveTotal" : 35,
+  "song" : {
+    "composer" : "Ira Gershwin\nGeorge Gershwin\nNat Adderley\nCannonball Adderley\nArr. 6EQUJ5",
+    "key" : "Eb",
+    "measures" : [
+      {
+        "chord" : "Ebmaj7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Ebmaj7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Ebmaj7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "w",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Ebmaj7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Ebmaj7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Ebmaj7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          },
+          {
+            "duration" : "qd",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "C\/5"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Gm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Gm7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Gm7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "C#\/5"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "C#\/5"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "C7",
+        "chordAnnotations" : [
+          {
+            "chord" : "C7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "C7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          },
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Fm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Fm7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Fm7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "w",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Fm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Fm7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Fm7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          },
+          {
+            "duration" : "qd",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Abm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Abm7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Abm7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "B\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "B\/4"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Bb7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Bb7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Bb7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/4"
+          },
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Ebmaj7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Ebmaj7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Ebmaj7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "8r",
+            "isRest" : true,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "b\/4"
+          },
+          {
+            "duration" : "qd",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Bbm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Bbm7",
+            "noteIndex" : 0
+          },
+          {
+            "chord" : "Eb7",
+            "noteIndex" : 3
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Bbm7",
+            "startSlot" : 0
+          },
+          {
+            "chord" : "Eb7",
+            "startSlot" : 360
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D#\/5"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D#\/5"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D#\/5"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D#\/5"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "D#\/5"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Abmaj7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Abmaj7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Abmaj7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D#\/5"
+          },
+          {
+            "duration" : "8r",
+            "isRest" : true,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "b\/4"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/4"
+          },
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "F\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Gm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Gm7",
+            "noteIndex" : 0
+          },
+          {
+            "chord" : "C7",
+            "noteIndex" : 1
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Gm7",
+            "startSlot" : 0
+          },
+          {
+            "chord" : "C7",
+            "startSlot" : 240
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/4"
+          },
+          {
+            "duration" : "qr",
+            "isRest" : true,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "b\/4"
+          },
+          {
+            "duration" : "qr",
+            "isRest" : true,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "b\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Fm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Fm7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Fm7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "8r",
+            "isRest" : true,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "b\/4"
+          },
+          {
+            "duration" : "qd",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Bb7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Bb7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Bb7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D\/5"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D\/5"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D\/5"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D\/5"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "D\/5"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Gm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Gm7",
+            "noteIndex" : 0
+          },
+          {
+            "chord" : "Cm7",
+            "noteIndex" : 3
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Gm7",
+            "startSlot" : 0
+          },
+          {
+            "chord" : "Cm7",
+            "startSlot" : 240
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D\/5"
+          },
+          {
+            "duration" : "8r",
+            "isRest" : true,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "b\/4"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D#\/4"
+          },
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "D#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Fm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Fm7",
+            "noteIndex" : 0
+          },
+          {
+            "chord" : "Bb7",
+            "noteIndex" : 1
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Fm7",
+            "startSlot" : 0
+          },
+          {
+            "chord" : "Bb7",
+            "startSlot" : 240
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D#\/4"
+          },
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Ebmaj7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Ebmaj7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Ebmaj7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "w",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Ebmaj7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Ebmaj7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Ebmaj7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          },
+          {
+            "duration" : "qd",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "C\/5"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Gm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Gm7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Gm7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "C#\/5"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "C#\/5"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "C7",
+        "chordAnnotations" : [
+          {
+            "chord" : "C7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "C7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          },
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Fm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Fm7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Fm7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "w",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Fm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Fm7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Fm7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          },
+          {
+            "duration" : "qd",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Abm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Abm7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Abm7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "B\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "B\/4"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "F#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Bb7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Bb7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Bb7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F#\/4"
+          },
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Ebmaj7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Ebmaj7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Ebmaj7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "8r",
+            "isRest" : true,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "b\/4"
+          },
+          {
+            "duration" : "qd",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Bbm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Bbm7",
+            "noteIndex" : 0
+          },
+          {
+            "chord" : "Eb7",
+            "noteIndex" : 2
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Bbm7",
+            "startSlot" : 0
+          },
+          {
+            "chord" : "Eb7",
+            "startSlot" : 240
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/5"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/5"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/5"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/5"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "F\/5"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Abmaj7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Abmaj7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Abmaj7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/5"
+          },
+          {
+            "duration" : "8r",
+            "isRest" : true,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "b\/4"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          },
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Abm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Abm7",
+            "noteIndex" : 0
+          },
+          {
+            "chord" : "Db7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Abm7",
+            "startSlot" : 0
+          },
+          {
+            "chord" : "Db7",
+            "startSlot" : 240
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "w",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Gm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Gm7",
+            "noteIndex" : 0
+          },
+          {
+            "chord" : "Cm7",
+            "noteIndex" : 2
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Gm7",
+            "startSlot" : 0
+          },
+          {
+            "chord" : "Cm7",
+            "startSlot" : 240
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "8r",
+            "isRest" : true,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "b\/4"
+          },
+          {
+            "duration" : "qd",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G\/4"
+          },
+          {
+            "duration" : "q",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "A#\/4"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D#\/5"
+          },
+          {
+            "duration" : "8",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "F\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Fm7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Fm7",
+            "noteIndex" : 0
+          },
+          {
+            "chord" : "Bb7",
+            "noteIndex" : 1
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Fm7",
+            "startSlot" : 0
+          },
+          {
+            "chord" : "Bb7",
+            "startSlot" : 360
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "F\/4"
+          },
+          {
+            "duration" : "h",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "G\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Ebmaj7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Ebmaj7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Ebmaj7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "w",
+            "isRest" : false,
+            "isTieEnd" : false,
+            "isTieStart" : true,
+            "isTriplet" : false,
+            "pitch" : "D#\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      },
+      {
+        "chord" : "Ebmaj7",
+        "chordAnnotations" : [
+          {
+            "chord" : "Ebmaj7",
+            "noteIndex" : 0
+          }
+        ],
+        "chordSlots" : [
+          {
+            "chord" : "Ebmaj7",
+            "startSlot" : 0
+          }
+        ],
+        "notes" : [
+          {
+            "duration" : "hd",
+            "isRest" : false,
+            "isTieEnd" : true,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "D#\/4"
+          },
+          {
+            "duration" : "qr",
+            "isRest" : true,
+            "isTieEnd" : false,
+            "isTieStart" : false,
+            "isTriplet" : false,
+            "pitch" : "b\/4"
+          }
+        ],
+        "sectionName" : null,
+        "slotsPerMeasure" : 480
+      }
+    ],
+    "style" : "Medium Swing",
+    "tempo" : 120,
+    "timeSignature" : "4\/4",
+    "title" : "Soon"
+  }
+}

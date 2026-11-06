@@ -1,0 +1,190 @@
+/* English localization for Real imPro */
+
+// Toolbar
+"未选择歌曲" = "No Song Selected";
+"调号" = "Key";
+
+// Empty state
+"请从左侧选择一首歌曲" = "Select a song from the left";
+
+// Sidebar
+"搜索歌曲" = "Search Songs";
+"导入曲谱" = "Import Chart";
+
+// Settings
+"算法选择已移动至顶部工具栏" = "Algorithm selection moved to top toolbar";
+"音域范围" = "Note Range";
+"最低音 MIDI:" = "Lowest MIDI:";
+"最高音 MIDI:" = "Highest MIDI:";
+"⚙️ 即兴参数设置" = "Impro Parameters";
+"完成" = "Done";
+
+// Licenses
+"致谢" = "Acknowledgments";
+"致谢与开源许可" = "Acknowledgments & Licenses";
+"GNU 通用公共许可证 v2" = "GNU General Public License v2";
+"查看完整源代码（GitHub）" = "View complete source code (GitHub)";
+"VexFlow — MIT License" = "VexFlow — MIT License";
+"music21 — BSD 3-Clause License" = "music21 — BSD 3-Clause License";
+"音源 SoundFont" = "SoundFont";
+"联系方式" = "Contact";
+
+// Import
+"点下方按钮检测剪贴板" = "Tap to check clipboard";
+"导入的歌单" = "Imported Playlist";
+"正在检测剪贴板..." = "Checking clipboard...";
+"剪贴板中没有找到 iReal Pro 乐谱" = "No iReal Pro chart found in clipboard";
+"请先在 iReal Pro 中复制乐谱，再回到这里" = "Copy a chart in iReal Pro first, then return here";
+"✅ 解析成功" = "✅ Parsed Successfully";
+"首歌" = "songs";
+"歌单名称" = "Playlist Name";
+"小节" = "bars";
+"确认导入" = "Confirm Import";
+"导入乐谱" = "Import Chart";
+"取消" = "Cancel";
+"播放" = "Play";
+"停止" = "Stop";
+
+"Import Complete" = "Import Complete";
+"Successfully imported %d songs. %d songs with mixed time signatures are partially supported (shown in primary time signature)." = "Successfully imported %d songs. %d songs with mixed time signatures are partially supported (shown in primary time signature).";
+"Mixed" = "Mixed";
+
+"All songs already exist." = "All songs already exist.";
+"Successfully imported %d songs, skipped %d duplicates." = "Successfully imported %d songs, skipped %d duplicates.";
+"Successfully imported %d songs, skipped %d duplicates. %d songs with mixed time signatures are partially supported." = "Successfully imported %d songs, skipped %d duplicates. %d songs with mixed time signatures are partially supported.";
+
+// Sidebar — Delete
+"删除" = "Delete";
+"删除歌曲" = "Delete Song";
+"确定要删除「%@」吗？" = "Are you sure you want to delete \"%@\"?";
+
+// Sidebar — Import Menu
+"从文件导入" = "Import from File";
+"从链接导入" = "Import from Link";
+
+// File Import
+"正在导入…" = "Importing…";
+"无法读取文件，请确认文件编码为 UTF-8。" = "Cannot read file. Please ensure the file is UTF-8 encoded.";
+"文件中未找到有效的 iReal Pro 乐谱。" = "No valid iReal Pro charts found in the file.";
+
+// Default Playlist
+"My Songs" = "My Songs";
+
+// Chord Dictionary (和弦音/色彩音字典页表头)
+"和弦音与色彩音" = "Chord & Color Tones";
+"和弦" = "Chord";
+"和弦音" = "Chord Tones";
+"保守色彩音" = "Conservative Color";
+"扩展色彩音" = "Extended Color";
+"推荐音阶" = "Recommend Scale";
+"核心三和弦与七和弦" = "Core Triads & Sevenths";
+"属七变化音" = "Altered Dominants";
+"挂留和弦" = "Suspended";
+"小调色彩" = "Minor Colors";
+"减 · 增 · 变化" = "Diminished · Augmented · Alt";
+"本页音级由分析引擎实时计算，与 Solo 生成、音符着色所用音集完全一致。" = "Degrees here are computed live from the analysis engine — identical to the tone sets used for solo generation and note coloring.";
+"Conservative：更克制的色彩音；Extended：对齐原版的完整色彩音池（只增不减）。" = "Conservative: a tighter set of color tones. Extended: the full original color-tone pool (superset of Conservative).";
+
+/* M5 ThemeWeaver Develop 主题发展 */
+"主题发展" = "Develop";
+"编辑动机" = "Edit Motif";
+"换一个" = "Regenerate";
+"点音符录入" = "Tap Notes";
+"粘贴音符" = "Paste Notes";
+"解析并填入" = "Parse & Add";
+"撤销" = "Undo";
+"清空" = "Clear";
+"完成" = "Done";
+"时值" = "Duration";
+"附点" = "Dotted";
+"三连音" = "Triplet";
+"休止" = "Rest";
+"缺少时值" = "missing duration";
+"无法识别的时值" = "unrecognized duration";
+"无法识别的音名" = "unrecognized note name";
+"音高超出 %d–%d" = "pitch out of range %d–%d";
+"已录 %d 音 · %d slots" = "%d notes · %d slots";
+"动机长度 %d / 小节 %d slots" = "Motif %d / measure %d slots";
+
+// Guide Tone line presets (group name "Guide" is a fixed English short label like Basic/Master, not localized)
+"平滑·每和弦两拍" = "Smooth";
+"上行·每和弦两拍" = "Rising";
+"下行·每和弦两拍" = "Falling";
+"密集·每拍换音" = "Busy";
+
+// [Hunk10] Mixer Transform embellishment toggle (user-visible label; no implementation name)
+"变换加花" = "Transform";
+
+// [方案21 20260915] Original⇄Solo 对照胶囊（原 melody 组专属提示文案已随 Melody 组下线删除）
+"原旋律" = "Original";
+"即兴" = "Solo";
+
+// [20260916] 侧栏播放列表删除/废纸篓（补齐此前漏翻，英文环境不再回退显示中文 key）
+"删除列表" = "Delete Playlist";
+"隐藏列表" = "Hide Playlist";
+"恢复经典爵士" = "Restore Classic Jazz";
+"恢复" = "Restore";
+"永久删除" = "Delete Forever";
+"废纸篓" = "Trash";
+"将「%@」移入废纸篓？" = "Move \"%@\" to Trash?";
+"确定要隐藏整个「%@」列表吗？可在下方菜单恢复。" = "Hide the entire \"%@\" playlist? You can restore it later from the menu below.";
+"确定删除整个「%@」歌单及其全部歌曲吗？此操作不可恢复。" = "Permanently delete the \"%@\" playlist and all of its songs? This cannot be undone.";
+"确定清空 My Songs 中除 Demo 外的全部歌曲吗？这些歌曲会移入废纸篓，可随时恢复。" = "Remove every song except Demo from My Songs? They will be moved to Trash and can be restored later.";
+"确定永久删除「%@」吗？此操作不可恢复。" = "Permanently delete \"%@\"? This cannot be undone.";
+"确定清空废纸篓吗？其中所有歌曲将被永久删除，此操作不可恢复。" = "Empty the Trash? All songs in it will be permanently deleted and cannot be recovered.";
+"您想将它恢复到初始播放列表吗？" = "Restore it to its original playlist?";
+
+// MARK: - P1 修复：付费错误（IAPManager）
+"无法连接 App Store，请检查网络后重试" = "Cannot connect to the App Store. Check your network and try again.";
+"购买验证失败，请重试" = "Purchase verification failed. Please try again.";
+"购买待处理，App Store 确认后将自动激活" = "Your purchase is pending. It will unlock automatically once the App Store confirms it.";
+"购买失败：%@" = "Purchase failed: %@";
+"未找到购买记录，请确认 Apple ID 是否正确" = "No previous purchase found. Please make sure you are signed in with the correct Apple ID.";
+"恢复失败：%@" = "Restore failed: %@";
+
+// MARK: - P1 修复：文件导入提示（ContentView importFromFile / importMusicXML）
+"无法读取 JSON 文件。" = "Unable to read the JSON file.";
+"旋律 JSON 解析失败。" = "Failed to parse the melody JSON file.";
+"暂不支持压缩的 .mxl 文件，请在“文件”App 中解压或另存为 .musicxml/.xml 后再导入。" = "Compressed .mxl files are not supported. Please uncompress it in the Files app, or save it as .musicxml/.xml, then import again.";
+"无法读取文件。" = "Unable to read the file.";
+"MusicXML 中未解析出有效乐曲。" = "No valid piece could be parsed from the MusicXML file.";
+"已导入《%@》。MusicXML 无可靠风格字段，伴奏统一按 Medium Swing（中等摇摆）处理；速度 %d BPM。原曲旋律与和弦可直接显示、播放与即兴。" = "Imported \"%@\". MusicXML has no reliable style field, so the accompaniment defaults to Medium Swing; tempo %d BPM. The original melody and chords can be viewed, played, and improvised over directly.";
+"MusicXML 解析失败，请确认是单 Part 的 lead sheet（和弦+旋律）。" = "Failed to parse the MusicXML file. Please make sure it is a single-part lead sheet (chords and melody).";
+
+// MARK: - P1 修复：级数分析开关 tooltip
+"显示/隐藏级数分析" = "Show or hide degree analysis.";
+
+// MARK: - P1 修复：MusicXML 导入错误（MusicXMLImportError）
+"XML 解析失败: %@" = "MusicXML parse error: %@";
+"V3 小节为空" = "No measures found in the score (V3).";
+"V6 全曲无和弦" = "No chords found in the score (V6).";
+"V4 多 Part(%d)，M3 前拦截" = "Multiple parts detected (%d). Only single-part lead sheets are supported (V4).";
+"V? 鼓/谱号不支持" = "Drum or percussion staves are not supported.";
+"V19 含移调乐器 transpose" = "Transposing instruments are not supported (V19).";
+"V5 不支持的拍号 %@" = "Unsupported time signature %@ (V5).";
+"V5 曲中换拍/混合拍" = "Changing or mixed time signatures within a piece are not supported (V5).";
+"V8 含 D.S./D.C./Coda/Fine 等导航跳转，暂不支持，已拦截" = "Navigation marks such as D.S., D.C., Coda, or Fine are not supported (V8).";
+// malformedRepeat 外层：内层 Repeater 描述已含 (V8)，外层英文不再重复前缀（key 保留 "V8 %@" 与代码一致）
+"V8 %@" = "%@";
+"V17 和弦无法识别比例过高（%d 个中有 %d 个无法识别，超过 20%），已拦截" = "Too many chords could not be recognized (out of %d chords, %d were unrecognized, over 20%%). Import stopped (V17).";
+"V20 存在时值不守恒小节（%@），已拦截" = "Some measures do not conserve total duration (%@). Import stopped (V20).";
+"内部数据无法序列化为 JSON" = "Internal data could not be serialized to JSON.";
+
+// MARK: - P1 修复：MusicXML 反复结构错误（MusicXMLRepeatError）
+"V8 反复结构无法可靠展开: %@" = "Repeat structure could not be expanded reliably (V8): %@";
+"ending/repeat 摆位非标准（start 应在左、stop 应在右）" = "Non-standard ending/repeat placement (start should be on the left, stop on the right).";
+"反复线方向摆位非标准（end 在左 / start 在右）" = "Non-standard repeat-barline direction (ending on the left, start on the right).";
+"volta 房子编号非法（含 0 或缺 number 属性）" = "Invalid volta (ending) numbering (contains 0 or is missing the number attribute).";
+"出现嵌套/外包反复（第 %d 小节收尾缺少对应的新开始线），暂不支持" = "Nested or outer repeats are not supported (the ending at measure %d has no matching new start).";
+"存在无法配对到反复段的 volta 房子" = "A volta (ending) could not be matched to a repeat section.";
+"第 %d 小节开始反复线没有匹配的收尾（forward-only）" = "The repeat start at measure %d has no matching ending (forward-only).";
+"展开后不是从首小节开始" = "The expanded result does not begin on the first measure.";
+"展开结果遗漏了源小节" = "The expanded result is missing some source measures.";
+"第 %d 小节开始的 volta 房子缺少 stop/discontinue 收尾" = "The volta (ending) starting at measure %d is missing a stop/discontinue ending.";
+"存在没有开始标记的 volta 收尾" = "A volta (ending) stop has no matching start mark.";
+"volta 编号不连续：%@（应为 1..%d）" = "Volta numbers are not consecutive: %@ (expected 1..%d).";
+"volta 房子之间不连续或重叠：%d → %d" = "Volta endings are not consecutive or they overlap: %d → %d.";
+"volta 公共体内出现嵌套反复（不支持）" = "A nested repeat was found inside the volta common section (not supported).";
+"第 %d 房子缺少反复收尾线" = "Ending %d is missing its repeat closing barline.";
+"出现嵌套反复（不支持）" = "Nested repeats are not supported.";
+"反复 times 非法：%d" = "Invalid repeat times: %d.";

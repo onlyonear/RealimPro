@@ -1,0 +1,24 @@
+# Xcode
+DerivedData/
+xcuserdata/
+*.xcuserstate
+build/
+
+# macOS
+.DS_Store
+
+# Backups / dev artifacts
+*.bak
+*.pre-*.bak
+audit_harness/
+audit证据-*/
+
+# Swift Package Manager
+.build/
+Packages/
+
+# App Store / signing
+*.mobileprovision
+*.p12
+RealimPro-source-release/
+.backup/

@@ -1,0 +1,7 @@
+probe_broken.swift:17:43: error: type 'ImproAlgorithmGroup' has no member 'master'
+15 | 
+16 | // 下面这行逐字对应 ContentView.swift:2583
+17 | let blocked = (selectedAlgorithmGroup == .master || selectedAlgorithmGroup == .learning) && !isPurchased
+   |                                           `- error: type 'ImproAlgorithmGroup' has no member 'master'
+18 | print(blocked)
+19 | 

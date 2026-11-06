@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<score-partwise version="3.1">
+  <part-list>
+    <score-part id="P1">
+      <part-name>Render Test B</part-name>
+    </score-part>
+  </part-list>
+  <part id="P1">
+
+    <!-- ============================================================= -->
+    <!-- Measure 1 : SIX 32nd-note TRIPLET members (two triplet        -->
+    <!-- groups). Each note = 10 slots (120 divisions per quarter).    -->
+    <!-- EXPECTED: import is REJECTED by the V20 conservation gate     -->
+    <!-- (10-slot triplet has no entry in NOTE_SLOT; it gets mapped    -->
+    <!-- to an 80-slot quarter triplet, breaking total duration).      -->
+    <!-- Chord: Cmaj7                                                  -->
+    <!-- ============================================================= -->
+    <measure number="1">
+      <attributes>
+        <divisions>120</divisions>
+        <key><fifths>0</fifths></key>
+        <time><beats>4</beats><beat-type>4</beat-type></time>
+        <clef><sign>G</sign><line>2</line></clef>
+      </attributes>
+      <harmony>
+        <root><root-step>C</root-step></root>
+        <kind>major-seventh</kind>
+      </harmony>
+
+      <!-- triplet group 1 (3 notes occupy one 16th = 30 slots) -->
+      <note>
+        <pitch><step>C</step><octave>4</octave></pitch>
+        <duration>10</duration>
+        <type>32nd</type>
+        <time-modification>
+          <actual-notes>3</actual-notes>
+          <normal-notes>2</normal-notes>
+          <normal-type>32nd</normal-type>
+        </time-modification>
+      </note>
+      <note>
+        <pitch><step>D</step><octave>4</octave></pitch>
+        <duration>10</duration>
+        <type>32nd</type>
+        <time-modification>
+          <actual-notes>3</actual-notes>
+          <normal-notes>2</normal-notes>
+          <normal-type>32nd</normal-type>
+        </time-modification>
+      </note>
+      <note>
+        <pitch><step>E</step><octave>4</octave></pitch>
+        <duration>10</duration>
+        <type>32nd</type>
+        <time-modification>
+          <actual-notes>3</actual-notes>
+          <normal-notes>2</normal-notes>
+          <normal-type>32nd</normal-type>
+        </time-modification>
+      </note>
+
+      <!-- triplet group 2 -->
+      <note>
+        <pitch><step>F</step><octave>4</octave></pitch>
+        <duration>10</duration>
+        <type>32nd</type>
+        <time-modification>
+          <actual-notes>3</actual-notes>
+          <normal-notes>2</normal-notes>
+          <normal-type>32nd</normal-type>
+        </time-modification>
+      </note>
+      <note>
+        <pitch><step>G</step><octave>4</octave></pitch>
+        <duration>10</duration>
+        <type>32nd</type>
+        <time-modification>
+          <actual-notes>3</actual-notes>
+          <normal-notes>2</normal-notes>
+          <normal-type>32nd</normal-type>
+        </time-modification>
+      </note>
+      <note>
+        <pitch><step>A</step><octave>4</octave></pitch>
+        <duration>10</duration>
+        <type>32nd</type>
+        <time-modification>
+          <actual-notes>3</actual-notes>
+          <normal-notes>2</normal-notes>
+          <normal-type>32nd</normal-type>
+        </time-modification>
+      </note>
+
+      <note><pitch><step>C</step><octave>4</octave></pitch><duration>240</duration><type>half</type></note>
+      <note><pitch><step>C</step><octave>4</octave></pitch><duration>180</duration><type>quarter</type><dot/></note>
+    </measure>
+
+  </part>
+</score-partwise>
