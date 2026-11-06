@@ -11,7 +11,32 @@ build/
 *.bak
 *.pre-*.bak
 audit_harness/
-audit证据-*/
+审计证据-*/
+.backup/
+RealimPro-source-release/
+
+# Dev process / audit files (not part of source code)
+importer_m1/
+scripts/
+.p3a_staging/
+.hermes/
+.roadmap_test/
+probe_g1/
+RenderTest_*/
+
+# Screenshots / verification evidence
+P2.*_截图/
+P3*验证证据*/
+
+# Root-level dev documents (design docs, audit reports, prompts)
+*.md
+
+# Misc dev files
+*.log
+s_id.txt
+test_chord.swift
+*.png
+!Real imPro/Assets.xcassets/**/*.png
 
 # Swift Package Manager
 .build/
@@ -20,5 +45,3 @@ Packages/
 # App Store / signing
 *.mobileprovision
 *.p12
-RealimPro-source-release/
-.backup/
