@@ -41,9 +41,42 @@ Packages/
 *.avi
 
 # ===== SoundFont: not bundled in this repository =====
-# The app expects ChoriumRevA.sf2 at build/runtime, but its license is not
-# clearly redistributable, so it is intentionally kept out of version control.
+# The app expects ChoriumRevA.sf2 at runtime, but its license is not clearly
+# redistributable, so it is kept out of version control.
 # See README.md -> "Getting the SoundFont" for how to obtain and place it.
 *.sf2
 *.sf3
 *.sfpack
+
+# ===== Local development / experiment directories =====
+音源实验/
+audit_harness/
+网格验收/
+头像成品_原始/
+头像_v1备份/
+头像_v2备份/
+头像_v3备份/
+头像_v4备份/
+RichPerry入包前备份/
+importer_m1/
+scripts/
+.p3a_staging/
+.hermes/
+.roadmap_test/
+probe_g1/
+RenderTest_*/
+审计证据-*/
+P2.*_截图/
+P3*验证证据*/
+
+# ===== Local dev scripts / archives =====
+*.py
+*.zip
+*.pdf
+s_id.txt
+test_chord.swift
+
+# ===== Markdown: keep only the public docs =====
+*.md
+!README.md
+!THIRD_PARTY_NOTICES.md
