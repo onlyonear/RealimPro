@@ -1,0 +1,49 @@
+# ===== Xcode / build =====
+DerivedData/
+DD/
+build/
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+# ===== Swift Package Manager =====
+.build/
+Packages/
+
+# ===== macOS =====
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ===== Signing / secrets (never commit) =====
+*.p12
+*.mobileprovision
+*.cer
+*.certSigningRequest
+
+# ===== Logs / backups / temp =====
+*.log
+*.bak
+*.orig
+
+# ===== Large media (not distributed in this repo) =====
+*.mp4
+*.mov
+*.avi
+
+# ===== SoundFont: not bundled in this repository =====
+# The app expects ChoriumRevA.sf2 at build/runtime, but its license is not
+# clearly redistributable, so it is intentionally kept out of version control.
+# See README.md -> "Getting the SoundFont" for how to obtain and place it.
+*.sf2
+*.sf3
+*.sfpack
